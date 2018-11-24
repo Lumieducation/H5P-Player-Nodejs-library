@@ -8,3 +8,4 @@ CODE-OF-CONDUCT.md
 tsconfig.json
 tslint.json
 .env
+tmp/
