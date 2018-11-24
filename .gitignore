@@ -1,0 +1,18 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Compiled files
+
+# vscode
+.vscode
+.DS_Store
+
+#
+tmp/
+h5p/content/
+h5p/libraries/
+
+# Dependency directory
+node_modules

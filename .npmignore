@@ -1,0 +1,10 @@
+node_modules/
+.github/
+.vscode/
+h5p/
+.editorconfig
+.prettierrc
+CODE-OF-CONDUCT.md
+tsconfig.json
+tslint.json
+.env
