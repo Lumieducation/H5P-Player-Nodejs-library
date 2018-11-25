@@ -235,34 +235,34 @@ function default_1(h5pinterface) {
         if (path.extname(req.files.file.name) !== '.h5p') {
             return res.status(400).send('only .h5p files are allowed');
         }
-        var uploaded_file = req.files.file;
-        uploaded_file.mv(path.resolve('tmp') + '/' + uploaded_file.name, function (err) {
+        var content_id = req.query.content_id ||
+            path.basename(req.files.file.name, path.extname(req.files.file.name));
+        req.files.file.mv(path.resolve('tmp') + '/' + content_id, function (err) {
             if (err) {
                 return res.status(500).send(err);
             }
-            var name = path.basename(uploaded_file.name, path.extname(uploaded_file.name));
-            fs.createReadStream(path.resolve('tmp') + '/' + uploaded_file.name).pipe(unzip
+            fs.createReadStream(path.resolve('tmp') + '/' + content_id).pipe(unzip
                 .Extract({
-                path: path.resolve('tmp') + '/unzip-' + name
+                path: path.resolve('tmp') + '/unzip-' + content_id
             })
                 .on('finish', function (error) {
                 setTimeout(function () {
                     fs.readFile(path.resolve('tmp') +
                         '/unzip-' +
-                        name +
+                        content_id +
                         '/h5p.json', 'utf8', function (h5p_json_error, data) {
-                        h5pinterface.save_h5p_json(name, JSON.parse(data), function () {
+                        h5pinterface.save_h5p_json(content_id, JSON.parse(data), function () {
                             fs.readFile(path.resolve('tmp') +
                                 '/unzip-' +
-                                name +
+                                content_id +
                                 '/content/content.json', 'utf8', function (content_json_error, content_json) {
-                                h5pinterface.save_content_json(name, JSON.parse(content_json), function () {
+                                h5pinterface.save_content_json(content_id, JSON.parse(content_json), function () {
                                     copydir(path.resolve('tmp') +
                                         '/unzip-' +
-                                        name, h5pinterface.library_dir, function (mv_error) {
+                                        content_id, h5pinterface.library_dir, function (mv_error) {
                                         recursiveReadDir(path.resolve('tmp') +
                                             '/unzip-' +
-                                            name +
+                                            content_id +
                                             '/content', function (_error, files) {
                                             files
                                                 .filter(function (file) {
@@ -271,13 +271,13 @@ function default_1(h5pinterface) {
                                             })
                                                 .forEach(function (file) {
                                                 fs.readFile(file, function (__error, file_data) {
-                                                    h5pinterface.save_content(name, path.basename(file), file_data);
+                                                    h5pinterface.save_content(content_id, path.basename(file), file_data);
                                                 });
                                             });
                                         });
                                         res.redirect(req.baseUrl +
                                             '?content_id=' +
-                                            name);
+                                            content_id);
                                     });
                                 });
                             });
