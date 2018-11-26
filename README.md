@@ -24,7 +24,7 @@ server.use(
 ## Usage
 
 ```ts
-import h5p from 'h5p-nodejs-library';
+import h5p from 'h5p-nodejs-library/router';
 const h5pinterface = {
     ... see H5P Interface
 }
