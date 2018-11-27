@@ -39,11 +39,24 @@ export default class H5P implements IH5P {
     ) {
         this.h5pinterface = h5pinterface;
         h5pinterface.load_h5p_json(content_id, (h5p_json_error, h5p_json) => {
+            if (h5p_json_error || !h5p_json) {
+                return cb(
+                    h5p_json_error || new Error('h5p.json not found'),
+                    undefined
+                );
+            }
             Object.assign(this, h5p_json);
 
             h5pinterface.load_content_json(
                 content_id,
                 (content_json_error, content_json) => {
+                    if (content_json_error || !h5p_json) {
+                        return cb(
+                            content_json_error ||
+                                new Error('content.json not found'),
+                            undefined
+                        );
+                    }
                     this.content = content_json;
 
                     this.js_dependencies = [];
@@ -63,17 +76,21 @@ export default class H5P implements IH5P {
     }
 
     public get_mainLibrary(): string {
-        return (
-            this.mainLibrary +
-            ' ' +
-            this.preloadedDependencies.filter(
-                dep => dep.machineName === this.mainLibrary
-            )[0].majorVersion +
-            '.' +
-            this.preloadedDependencies.filter(
-                dep => dep.machineName === this.mainLibrary
-            )[0].minorVersion
-        );
+        try {
+            return (
+                this.mainLibrary +
+                ' ' +
+                this.preloadedDependencies.filter(
+                    dep => dep.machineName === this.mainLibrary
+                )[0].majorVersion +
+                '.' +
+                this.preloadedDependencies.filter(
+                    dep => dep.machineName === this.mainLibrary
+                )[0].minorVersion
+            );
+        } catch (error) {
+            return 'LIBRARY NOT FOUND';
+        }
     }
 
     public dependencies(): IResolvedDependencies {

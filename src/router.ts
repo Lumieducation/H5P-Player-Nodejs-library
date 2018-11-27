@@ -95,6 +95,9 @@ export default function(h5pinterface: IH5PInterface): express.Router {
 
         try {
             const _h = new H5P(content_id, h5pinterface, (error, h5p: H5P) => {
+                if (error) {
+                    return res.status(400).json(error);
+                }
                 const dependencies = {
                     js: h5p
                         .dependencies()
@@ -196,6 +199,9 @@ export default function(h5pinterface: IH5PInterface): express.Router {
                         )
                     ) +
                     '</script>' +
+                    '<script> H5PIntegration.contents["cid-' +
+                    content_id +
+                    '"].contentUserData = parent.__H5P_USERDATA; </script>' +
                     '<script>' +
                     'window.H5PIntegration.contents = window.H5PIntegration.contents || {}; \n' +
                     'window.H5PIntegration.contents["cid-' +
@@ -313,7 +319,9 @@ export default function(h5pinterface: IH5PInterface): express.Router {
                         path: path.resolve('tmp') + '/unzip-' + content_id
                     })
                     .on('finish', error => {
-                        setTimeout(() => {
+                        if (error) {
+                            return res.status(500).json(error);
+                        }
                             fs.readFile(
                                 path.resolve('tmp') +
                                     '/unzip-' +
@@ -321,6 +329,9 @@ export default function(h5pinterface: IH5PInterface): express.Router {
                                     '/h5p.json',
                                 'utf8',
                                 (h5p_json_error, data) => {
+                                if (h5p_json_error) {
+                                    return res.status(500).json(h5p_json_error);
+                                }
                                     h5pinterface.save_h5p_json(
                                         content_id,
                                         JSON.parse(data),
