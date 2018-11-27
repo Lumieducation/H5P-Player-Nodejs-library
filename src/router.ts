@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as path from 'path';
 import * as fs from 'fs';
-import * as unzip from 'unzip';
+import * as unzipper from 'unzipper';
 import * as mkdirp from 'mkdirp';
 import * as copydir from 'copy-dir';
 import * as recursiveReadDir from 'recursive-readdir';
@@ -314,108 +314,112 @@ export default function(h5pinterface: IH5PInterface): express.Router {
             }
 
             fs.createReadStream(path.resolve('tmp') + '/' + content_id).pipe(
-                unzip
+                unzipper
                     .Extract({
                         path: path.resolve('tmp') + '/unzip-' + content_id
                     })
-                    .on('finish', error => {
+                    .on('close', error => {
                         if (error) {
                             return res.status(500).json(error);
                         }
-                            fs.readFile(
-                                path.resolve('tmp') +
-                                    '/unzip-' +
-                                    content_id +
-                                    '/h5p.json',
-                                'utf8',
-                                (h5p_json_error, data) => {
+                        fs.readFile(
+                            path.resolve('tmp') +
+                                '/unzip-' +
+                                content_id +
+                                '/h5p.json',
+                            'utf8',
+                            (h5p_json_error, data) => {
                                 if (h5p_json_error) {
                                     return res.status(500).json(h5p_json_error);
                                 }
-                                    h5pinterface.save_h5p_json(
-                                        content_id,
-                                        JSON.parse(data),
-                                        () => {
-                                            fs.readFile(
-                                                path.resolve('tmp') +
-                                                    '/unzip-' +
-                                                    content_id +
-                                                    '/content/content.json',
-                                                'utf8',
-                                                (
-                                                    content_json_error,
-                                                    content_json
-                                                ) => {
-                                                    h5pinterface.save_content_json(
-                                                        content_id,
-                                                        JSON.parse(
-                                                            content_json
-                                                        ),
-                                                        () => {
-                                                            copydir(
-                                                                path.resolve(
-                                                                    'tmp'
-                                                                ) +
-                                                                    '/unzip-' +
-                                                                    content_id,
-                                                                h5pinterface.library_dir,
-                                                                mv_error => {
-                                                                    recursiveReadDir(
-                                                                        path.resolve(
-                                                                            'tmp'
-                                                                        ) +
-                                                                            '/unzip-' +
-                                                                            content_id +
-                                                                            '/content',
-                                                                        (
-                                                                            _error: Error,
-                                                                            files: string[]
-                                                                        ) => {
-                                                                            files
-                                                                                .filter(
-                                                                                    file =>
-                                                                                        file.indexOf(
-                                                                                            'content.json'
-                                                                                        ) ===
-                                                                                        -1
-                                                                                )
-                                                                                .forEach(
-                                                                                    file => {
-                                                                                        fs.readFile(
-                                                                                            file,
-                                                                                            (
-                                                                                                __error,
-                                                                                                file_data: Buffer
-                                                                                            ) => {
-                                                                                                h5pinterface.save_content(
-                                                                                                    content_id,
-                                                                                                    path.basename(
-                                                                                                        file
-                                                                                                    ),
-                                                                                                    file_data
-                                                                                                );
-                                                                                            }
-                                                                                        );
-                                                                                    }
-                                                                                );
-                                                                        }
-                                                                    );
-                                                                    res.redirect(
-                                                                        req.baseUrl +
-                                                                            '?content_id=' +
-                                                                            content_id
-                                                                    );
-                                                                }
-                                                            );
-                                                        }
-                                                    );
+                                h5pinterface.save_h5p_json(
+                                    content_id,
+                                    JSON.parse(data),
+                                    () => {
+                                        fs.readFile(
+                                            path.resolve('tmp') +
+                                                '/unzip-' +
+                                                content_id +
+                                                '/content/content.json',
+                                            'utf8',
+                                            (
+                                                content_json_error,
+                                                content_json
+                                            ) => {
+                                                if (content_json_error) {
+                                                    return res
+                                                        .status(500)
+                                                        .json(
+                                                            content_json_error
+                                                        );
                                                 }
-                                            );
-                                        }
-                                    );
-                                }
-                            );
-                        }, 500);
+                                                h5pinterface.save_content_json(
+                                                    content_id,
+                                                    JSON.parse(content_json),
+                                                    () => {
+                                                        copydir(
+                                                            path.resolve(
+                                                                'tmp'
+                                                            ) +
+                                                                '/unzip-' +
+                                                                content_id,
+                                                            h5pinterface.library_dir,
+                                                            mv_error => {
+                                                                recursiveReadDir(
+                                                                    path.resolve(
+                                                                        'tmp'
+                                                                    ) +
+                                                                        '/unzip-' +
+                                                                        content_id +
+                                                                        '/content',
+                                                                    (
+                                                                        _error: Error,
+                                                                        files: string[]
+                                                                    ) => {
+                                                                        files
+                                                                            .filter(
+                                                                                file =>
+                                                                                    file.indexOf(
+                                                                                        'content.json'
+                                                                                    ) ===
+                                                                                    -1
+                                                                            )
+                                                                            .forEach(
+                                                                                file => {
+                                                                                    fs.readFile(
+                                                                                        file,
+                                                                                        (
+                                                                                            __error,
+                                                                                            file_data: Buffer
+                                                                                        ) => {
+                                                                                            h5pinterface.save_content(
+                                                                                                content_id,
+                                                                                                path.basename(
+                                                                                                    file
+                                                                                                ),
+                                                                                                file_data
+                                                                                            );
+                                                                                        }
+                                                                                    );
+                                                                                }
+                                                                            );
+                                                                    }
+                                                                );
+                                                                res.redirect(
+                                                                    req.baseUrl +
+                                                                        '?content_id=' +
+                                                                        content_id
+                                                                );
+                                                            }
+                                                        );
+                                                    }
+                                                );
+                                            }
+                                        );
+                                    }
+                                );
+                            }
+                        );
                     })
             );
         });
