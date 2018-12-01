@@ -139,6 +139,9 @@ const h5pinterface: IH5PInterface = {
             }
         );
     },
+    upload_complete: (content_id: string) => {
+        console.log(content_id);
+    },
 
     library_dir: path.resolve('') + '/' + process.env.H5P_LIB,
     core_dir: path.resolve('') + '/' + process.env.H5P_CORE,

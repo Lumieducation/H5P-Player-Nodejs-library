@@ -37,6 +37,7 @@ export interface IH5PInterface {
         h5p_json: JSON,
         done: (error: Error) => void
     ) => void;
+    upload_complete?: (content_id: string) => void;
 
     library_dir: string;
     core_dir: string;
