@@ -405,6 +405,13 @@ export default function(h5pinterface: IH5PInterface): express.Router {
                                                                             );
                                                                     }
                                                                 );
+                                                                if (
+                                                                    h5pinterface.upload_complete
+                                                                ) {
+                                                                    h5pinterface.upload_complete(
+                                                                        content_id
+                                                                    );
+                                                                }
                                                                 res.redirect(
                                                                     req.baseUrl +
                                                                         '?content_id=' +
