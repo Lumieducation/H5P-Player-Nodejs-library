@@ -9,7 +9,7 @@ export interface IH5PInterface {
         cb: (error: Error, content: IContent) => void
     ) => void;
     load_content: (
-        content_id,
+        req: express.Request,
         file_name: string,
         cb: (error: Error, buffer: Buffer) => void
     ) => void;
