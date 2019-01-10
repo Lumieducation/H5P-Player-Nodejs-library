@@ -1,3 +1,4 @@
+import * as express from 'express';
 import { uniq } from 'lodash';
 
 import {
@@ -33,12 +34,12 @@ export default class H5P implements IH5P {
     private h5pinterface: IH5PInterface;
 
     constructor(
-        content_id: Content_id,
+        req: express.Request,
         h5pinterface: IH5PInterface,
         cb: (error: Error, h5p: H5P) => void
     ) {
         this.h5pinterface = h5pinterface;
-        h5pinterface.load_h5p_json(content_id, (h5p_json_error, h5p_json) => {
+        h5pinterface.load_h5p_json(req, (h5p_json_error, h5p_json) => {
             if (h5p_json_error || !h5p_json) {
                 return cb(
                     h5p_json_error || new Error('h5p.json not found'),
@@ -48,7 +49,7 @@ export default class H5P implements IH5P {
             Object.assign(this, h5p_json);
 
             h5pinterface.load_content_json(
-                content_id,
+                req,
                 (content_json_error, content_json) => {
                     if (content_json_error || !h5p_json) {
                         return cb(

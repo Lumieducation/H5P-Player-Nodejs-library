@@ -1,3 +1,4 @@
+import * as express from 'express';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as mkdirp from 'mkdirp';
@@ -6,7 +7,7 @@ import { IH5PInterface, IContent, IH5P } from './types';
 
 const h5pinterface: IH5PInterface = {
     load_content_json: (
-        content_id: string,
+        req: express.Request,
         cb: (error, content: IContent) => void
     ) => {
         cb(
@@ -15,12 +16,12 @@ const h5pinterface: IH5PInterface = {
                 '/' +
                 process.env.H5P_CONTENT +
                 '/' +
-                content_id +
+                req.query.content_id +
                 '/content/content.json')
         );
     },
     load_h5p_json: (
-        content_id: string,
+        req: express.Request,
         cb: (error, h5p_json: IH5P) => void
     ) => {
         cb(
@@ -29,7 +30,7 @@ const h5pinterface: IH5PInterface = {
                 '/' +
                 process.env.H5P_CONTENT +
                 '/' +
-                content_id +
+                req.query.content_id +
                 '/h5p.json')
         );
     },
@@ -45,7 +46,7 @@ const h5pinterface: IH5PInterface = {
         );
     },
     load_content: (
-        content_id: string,
+        req: express.Request,
         file_name: string,
         cb: (error: Error, buffer: Buffer) => void
     ) => {
@@ -53,7 +54,7 @@ const h5pinterface: IH5PInterface = {
             path.join(
                 path.resolve(''),
                 process.env.H5P_CONTENT,
-                content_id,
+                req.params.content_id,
                 'content',
                 file_name
             ),
@@ -63,18 +64,22 @@ const h5pinterface: IH5PInterface = {
         );
     },
     save_h5p_json: (
-        content_id: string,
+        req: express.Request,
         h5p_json: JSON,
         done: (error) => void
     ) => {
         mkdirp(
-            path.join(path.resolve(''), process.env.H5P_CONTENT, content_id),
+            path.join(
+                path.resolve(''),
+                process.env.H5P_CONTENT,
+                req.query.content_id
+            ),
             () => {
                 fs.writeFile(
                     path.join(
                         path.resolve(''),
                         process.env.H5P_CONTENT,
-                        content_id,
+                        req.query.content_id,
                         'h5p.json'
                     ),
                     JSON.stringify(h5p_json),
@@ -85,7 +90,7 @@ const h5pinterface: IH5PInterface = {
         );
     },
     save_content_json: (
-        content_id: string,
+        req: express.Request,
         content_json: JSON,
         done: (error) => void
     ) => {
@@ -93,7 +98,7 @@ const h5pinterface: IH5PInterface = {
             path.join(
                 path.resolve(''),
                 process.env.H5P_CONTENT,
-                content_id,
+                req.query.content_id,
                 'content'
             ),
             () => {
@@ -101,7 +106,7 @@ const h5pinterface: IH5PInterface = {
                     path.join(
                         path.resolve(''),
                         process.env.H5P_CONTENT,
-                        content_id,
+                        req.query.content_id,
                         'content',
                         'content.json'
                     ),
@@ -112,12 +117,16 @@ const h5pinterface: IH5PInterface = {
             }
         );
     },
-    save_content: (content_id: string, file_name: string, content: Buffer) => {
+    save_content: (
+        req: express.Request,
+        file_name: string,
+        content: Buffer
+    ) => {
         mkdirp(
             path.join(
                 path.resolve(''),
                 process.env.H5P_CONTENT,
-                content_id,
+                req.query.content_id,
                 'content',
                 'images'
             ),
@@ -126,7 +135,7 @@ const h5pinterface: IH5PInterface = {
                     path.join(
                         path.resolve(''),
                         process.env.H5P_CONTENT,
-                        content_id,
+                        req.query.content_id,
                         'content',
                         'images',
                         file_name
@@ -139,8 +148,8 @@ const h5pinterface: IH5PInterface = {
             }
         );
     },
-    upload_complete: (content_id: string) => {
-        console.log(content_id);
+    upload_complete: (req: express.Request) => {
+        console.log(req.query.content_id);
     },
 
     library_dir: path.resolve('') + '/' + process.env.H5P_LIB,

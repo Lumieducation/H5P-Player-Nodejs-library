@@ -5,7 +5,7 @@ export type Content_id = string;
 
 export interface IH5PInterface {
     load_content_json: (
-        content_id: string,
+        req: express.Request,
         cb: (error: Error, content: IContent) => void
     ) => void;
     load_content: (
@@ -14,7 +14,7 @@ export interface IH5PInterface {
         cb: (error: Error, buffer: Buffer) => void
     ) => void;
     load_h5p_json: (
-        content_id: string,
+        req: express.Request,
         cb: (error: Error, h5p_json: IH5P) => void
     ) => void;
     load_library: (
@@ -23,21 +23,21 @@ export interface IH5PInterface {
     ) => void;
 
     save_content_json: (
-        content_id: string,
+        req: express.Request,
         content_json: JSON,
         done: (error: Error) => void
     ) => void;
     save_content: (
-        content_id: string,
+        req: express.Request,
         file_name: string,
         content: Buffer
     ) => void;
     save_h5p_json: (
-        content_id: string,
+        req: express.Request,
         h5p_json: JSON,
         done: (error: Error) => void
     ) => void;
-    upload_complete?: (content_id: string) => void;
+    upload_complete?: (req: express.Request) => void;
 
     library_dir: string;
     core_dir: string;
