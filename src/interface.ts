@@ -117,37 +117,34 @@ const h5pinterface: IH5PInterface = {
             }
         );
     },
-    save_content: (
-        req: express.Request,
-        file_name: string,
-        content: Buffer
-    ) => {
-        mkdirp(
-            path.join(
-                path.resolve(''),
-                process.env.H5P_CONTENT,
-                req.query.content_id,
-                'content',
-                'images'
-            ),
-            () => {
-                fs.writeFile(
-                    path.join(
-                        path.resolve(''),
-                        process.env.H5P_CONTENT,
-                        req.query.content_id,
-                        'content',
-                        'images',
-                        file_name
-                    ),
-                    content,
-                    () => {
-                        console.log('file written');
-                    }
-                );
-            }
-        );
-    },
+    save_content: (req: express.Request, file_name: string, content: Buffer) =>
+        new Promise((resolve, reject) => {
+            mkdirp(
+                path.join(
+                    path.resolve(''),
+                    process.env.H5P_CONTENT,
+                    req.query.content_id,
+                    'content',
+                    'images'
+                ),
+                () => {
+                    fs.writeFile(
+                        path.join(
+                            path.resolve(''),
+                            process.env.H5P_CONTENT,
+                            req.query.content_id,
+                            'content',
+                            'images',
+                            file_name
+                        ),
+                        content,
+                        () => {
+                            resolve();
+                        }
+                    );
+                }
+            );
+        }),
     upload_complete: (req: express.Request) => {
         console.log(req.query.content_id);
     },

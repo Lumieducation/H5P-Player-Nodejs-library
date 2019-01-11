@@ -31,7 +31,7 @@ export interface IH5PInterface {
         req: express.Request,
         file_name: string,
         content: Buffer
-    ) => void;
+    ) => Promise<boolean>;
     save_h5p_json: (
         req: express.Request,
         h5p_json: JSON,
