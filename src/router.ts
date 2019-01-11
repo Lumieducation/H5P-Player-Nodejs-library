@@ -313,8 +313,6 @@ export default function(h5pinterface: IH5PInterface): express.Router {
                 return res.status(500).send(err);
             }
 
-            const queue = new PromiseQueue(1, Infinity);
-
             fs.createReadStream(path.resolve('tmp') + '/' + content_id).pipe(
                 unzipper
                     .Extract({
@@ -324,117 +322,132 @@ export default function(h5pinterface: IH5PInterface): express.Router {
                         if (error) {
                             return res.status(500).json(error);
                         }
-                        fs.readFile(
-                            path.resolve('tmp') +
-                                '/unzip-' +
-                                content_id +
-                                '/h5p.json',
-                            'utf8',
-                            (h5p_json_error, data) => {
-                                if (h5p_json_error) {
-                                    return res.status(500).json(h5p_json_error);
+                        save_content(content_id, h5pinterface, req)
+                            .then(() =>
+                                save_content_json(content_id, h5pinterface, req)
+                            )
+                            .then(() => copy_libs(content_id, h5pinterface))
+                            .then(() =>
+                                save_h5p_json(content_id, h5pinterface, req)
+                            )
+                            .then(() => {
+                                if (h5pinterface.upload_complete) {
+                                    h5pinterface.upload_complete(req);
                                 }
-                                h5pinterface.save_h5p_json(
-                                    req,
-                                    JSON.parse(data),
-                                    () => {
-                                        fs.readFile(
-                                            path.resolve('tmp') +
-                                                '/unzip-' +
-                                                content_id +
-                                                '/content/content.json',
-                                            'utf8',
-                                            (
-                                                content_json_error,
-                                                content_json
-                                            ) => {
-                                                if (content_json_error) {
-                                                    return res
-                                                        .status(500)
-                                                        .json(
-                                                            content_json_error
-                                                        );
-                                                }
-                                                h5pinterface.save_content_json(
-                                                    req,
-                                                    JSON.parse(content_json),
-                                                    () => {
-                                                        copydir(
-                                                            path.resolve(
-                                                                'tmp'
-                                                            ) +
-                                                                '/unzip-' +
-                                                                content_id,
-                                                            h5pinterface.library_dir,
-                                                            mv_error => {
-                                                                recursiveReadDir(
-                                                                    path.resolve(
-                                                                        'tmp'
-                                                                    ) +
-                                                                        '/unzip-' +
-                                                                        content_id +
-                                                                        '/content',
-                                                                    (
-                                                                        _error: Error,
-                                                                        files: string[]
-                                                                    ) => {
-                                                                        files
-                                                                            .filter(
-                                                                                file =>
-                                                                                    file.indexOf(
-                                                                                        'content.json'
-                                                                                    ) ===
-                                                                                    -1
-                                                                            )
-                                                                            .forEach(
-                                                                                file => {
-                                                                                    fs.readFile(
-                                                                                        file,
-                                                                                        (
-                                                                                            __error,
-                                                                                            file_data: Buffer
-                                                                                        ) => {
-                                                                                            queue.add(
-                                                                                                h5pinterface.save_content(
-                                                                                                    req,
-                                                                                                    path.basename(
-                                                                                                        file
-                                                                                                    ),
-                                                                                                    file_data
-                                                                                                )
-                                                                                            );
-                                                                                        }
-                                                                                    );
-                                                                                }
-                                                                            );
-                                                                    }
-                                                                );
-                                                                if (
-                                                                    h5pinterface.upload_complete
-                                                                ) {
-                                                                    h5pinterface.upload_complete(
-                                                                        req
-                                                                    );
-                                                                }
-                                                                res.redirect(
-                                                                    req.baseUrl +
-                                                                        '?content_id=' +
-                                                                        content_id
-                                                                );
-                                                            }
-                                                        );
-                                                    }
-                                                );
-                                            }
-                                        );
-                                    }
+                                res.redirect(
+                                    req.baseUrl + '?content_id=' + content_id
                                 );
-                            }
-                        );
+                            })
+                            .catch(_error => res.status(500).json(_error));
                     })
             );
         });
     });
 
     return router;
+}
+
+function save_h5p_json(
+    content_id: string,
+    h5pinterface: IH5PInterface,
+    req
+): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+        fs.readFile(
+            path.resolve('tmp') + '/unzip-' + content_id + '/h5p.json',
+            'utf8',
+            (h5p_json_error, data) => {
+                if (h5p_json_error) {
+                    reject(h5p_json_error);
+                }
+                h5pinterface.save_h5p_json(req, JSON.parse(data), () => {
+                    resolve();
+                });
+            }
+        );
+    });
+}
+
+function save_content_json(
+    content_id: string,
+    h5pinterface: IH5PInterface,
+    req
+): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+        fs.readFile(
+            path.resolve('tmp') +
+                '/unzip-' +
+                content_id +
+                '/content/content.json',
+            'utf8',
+            (content_json_error, content_json) => {
+                if (content_json_error) {
+                    return reject(content_json_error);
+                }
+                h5pinterface.save_content_json(
+                    req,
+                    JSON.parse(content_json),
+                    error => {
+                        if (error) {
+                            return reject(error);
+                        }
+                        resolve();
+                    }
+                );
+            }
+        );
+    });
+}
+
+function copy_libs(
+    content_id: string,
+    h5pinterface: IH5PInterface
+): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+        copydir(
+            path.resolve('tmp') + '/unzip-' + content_id,
+            h5pinterface.library_dir,
+            mv_error => {
+                if (mv_error) {
+                    return reject(mv_error);
+                }
+                resolve();
+            }
+        );
+    });
+}
+
+function save_content(
+    content_id: string,
+    h5pinterface: IH5PInterface,
+    req
+): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+        const queue = new PromiseQueue(1, Infinity);
+
+        recursiveReadDir(
+            path.resolve('tmp') + '/unzip-' + content_id + '/content',
+            (_error: Error, files: string[]) => {
+                files
+                    .filter(file => file.indexOf('content.json') === -1)
+                    .forEach(file => {
+                        fs.readFile(file, (__error, file_data: Buffer) => {
+                            queue.add(() => {
+                                return h5pinterface.save_content(
+                                    req,
+                                    path.basename(file),
+                                    file_data
+                                );
+                            });
+                            const interval = setInterval(() => {
+                                if (queue.getPendingLength() === 0) {
+                                    resolve();
+                                    clearInterval(interval);
+                                }
+                            }, 100);
+                        });
+                    });
+            }
+        );
+    });
 }
