@@ -5,6 +5,7 @@ import * as unzipper from 'unzipper';
 import * as mkdirp from 'mkdirp';
 import * as copydir from 'copy-dir';
 import * as recursiveReadDir from 'recursive-readdir';
+import * as PromiseQueue from 'promise-queue';
 
 import { IH5PInterface, IUploadRequest } from './types';
 
@@ -312,6 +313,8 @@ export default function(h5pinterface: IH5PInterface): express.Router {
                 return res.status(500).send(err);
             }
 
+            const queue = new PromiseQueue(1, Infinity);
+
             fs.createReadStream(path.resolve('tmp') + '/' + content_id).pipe(
                 unzipper
                     .Extract({
@@ -391,12 +394,14 @@ export default function(h5pinterface: IH5PInterface): express.Router {
                                                                                             __error,
                                                                                             file_data: Buffer
                                                                                         ) => {
-                                                                                            h5pinterface.save_content(
-                                                                                                req,
-                                                                                                path.basename(
-                                                                                                    file
-                                                                                                ),
-                                                                                                file_data
+                                                                                            queue.add(
+                                                                                                h5pinterface.save_content(
+                                                                                                    req,
+                                                                                                    path.basename(
+                                                                                                        file
+                                                                                                    ),
+                                                                                                    file_data
+                                                                                                )
                                                                                             );
                                                                                         }
                                                                                     );

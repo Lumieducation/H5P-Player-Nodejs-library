@@ -26,6 +26,7 @@
         "lodash": "^4.17.11",
         "mkdirp": "^0.5.1",
         "mv": "^2.1.1",
+        "promise-queue": "^2.2.5",
         "react": "16.4.1",
         "react-dom": "16.4.1",
         "recursive-readdir": "^2.2.2",
