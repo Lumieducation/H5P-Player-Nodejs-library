@@ -35,6 +35,9 @@ export default function(h5pinterface: IH5PInterface): express.Router {
         '/content/:content_id/*',
         (req: express.Request, res: express.Response) => {
             h5pinterface.load_content(req, req.params[0], (error, buffer) => {
+                if (error) {
+                    return res.status(404).end();
+                }
                 res.send(buffer);
             });
         }
