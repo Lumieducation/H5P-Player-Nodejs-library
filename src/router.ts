@@ -6,6 +6,7 @@ import * as mkdirp from 'mkdirp';
 import * as copydir from 'copy-dir';
 import * as recursiveReadDir from 'recursive-readdir';
 import * as PromiseQueue from 'promise-queue';
+import * as rimraf from 'rimraf';
 
 import { IH5PInterface, IUploadRequest } from './types';
 
@@ -308,9 +309,30 @@ export default function(h5pinterface: IH5PInterface): express.Router {
 
         const content_id = req.query.content_id;
 
-        req.files.file.mv(path.resolve('tmp') + '/' + content_id, err => {
+        move_file_and_extract(req.files.file, content_id)
+            .then(() => save_content(content_id, h5pinterface, req))
+            .then(() => save_content_json(content_id, h5pinterface, req))
+            .then(() => copy_libs(content_id, h5pinterface))
+            .then(() => save_h5p_json(content_id, h5pinterface, req))
+            .then(() => h5pinterface.upload_complete(req))
+            .then(() => clean_tmp(content_id))
+            .then(() => {
+                res.redirect(req.baseUrl + '?content_id=' + content_id);
+            })
+            .catch(error => {
+                // h5pinterface.handle_error(req, res, error);
+                res.status(500).end();
+            });
+    });
+
+    return router;
+}
+
+function move_file_and_extract(file, content_id: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+        file.mv(path.resolve('tmp') + '/' + content_id, err => {
             if (err) {
-                return res.status(500).send(err);
+                reject(err);
             }
 
             fs.createReadStream(path.resolve('tmp') + '/' + content_id).pipe(
@@ -320,31 +342,13 @@ export default function(h5pinterface: IH5PInterface): express.Router {
                     })
                     .on('close', error => {
                         if (error) {
-                            return res.status(500).json(error);
+                            return reject(error);
                         }
-                        save_content(content_id, h5pinterface, req)
-                            .then(() =>
-                                save_content_json(content_id, h5pinterface, req)
-                            )
-                            .then(() => copy_libs(content_id, h5pinterface))
-                            .then(() =>
-                                save_h5p_json(content_id, h5pinterface, req)
-                            )
-                            .then(() => {
-                                if (h5pinterface.upload_complete) {
-                                    h5pinterface.upload_complete(req);
-                                }
-                                res.redirect(
-                                    req.baseUrl + '?content_id=' + content_id
-                                );
-                            })
-                            .catch(_error => res.status(500).json(_error));
+                        resolve();
                     })
             );
         });
     });
-
-    return router;
 }
 
 function save_h5p_json(
@@ -423,13 +427,17 @@ function save_content(
     req
 ): Promise<boolean> {
     return new Promise((resolve, reject) => {
-        const queue = new PromiseQueue(1, Infinity);
+        const queue = new PromiseQueue(
+            h5pinterface.max_concurrent,
+            h5pinterface.max_queued
+        );
 
         recursiveReadDir(
             path.resolve('tmp') + '/unzip-' + content_id + '/content',
             (_error: Error, files: string[]) => {
                 files
                     .filter(file => file.indexOf('content.json') === -1)
+                    .filter(file => file.indexOf('h5p.json') === -1)
                     .forEach(file => {
                         fs.readFile(file, (__error, file_data: Buffer) => {
                             queue.add(() => {
@@ -439,15 +447,31 @@ function save_content(
                                     file_data
                                 );
                             });
-                            const interval = setInterval(() => {
-                                if (queue.getPendingLength() === 0) {
-                                    resolve();
-                                    clearInterval(interval);
-                                }
-                            }, 100);
                         });
                     });
+                const interval = setInterval(() => {
+                    if (queue.getPendingLength() === 0) {
+                        resolve();
+                        clearInterval(interval);
+                    }
+                }, 100);
             }
         );
+    });
+}
+
+function clean_tmp(content_id: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+        rimraf(path.resolve('tmp') + '/unzip-' + content_id, error => {
+            if (error) {
+                return reject(error);
+            }
+            rimraf(path.resolve('tmp') + '/' + content_id, _error => {
+                if (_error) {
+                    return reject(_error);
+                }
+                resolve();
+            });
+        });
     });
 }

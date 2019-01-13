@@ -145,12 +145,15 @@ const h5pinterface: IH5PInterface = {
                 }
             );
         }),
-    upload_complete: (req: express.Request) => {
-        console.log(req.query.content_id);
-    },
+    upload_complete: (req: express.Request) =>
+        new Promise((resolve, reject) => {
+            resolve();
+        }),
 
     library_dir: path.resolve('') + '/' + process.env.H5P_LIB,
     core_dir: path.resolve('') + '/' + process.env.H5P_CORE,
+    max_concurrent: 1,
+    max_queued: Infinity,
     integration: {
         postUserStatistics: true,
         ajaxPath: '',
