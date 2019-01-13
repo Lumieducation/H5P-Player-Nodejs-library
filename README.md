@@ -40,16 +40,16 @@ Your interface-object should include the following:
 ```ts
 interface IH5PInterface {
     load_content_json: (
-        content_id: string,
+        req: express.Request,
         cb: (error: Error, content: IContent) => void
     ) => void;
     load_content: (
-        content_id,
+        req: express.Request,
         file_name: string,
         cb: (error: Error, buffer: Buffer) => void
     ) => void;
     load_h5p_json: (
-        content_id: string,
+        req: express.Request,
         cb: (error: Error, h5p_json: IH5P) => void
     ) => void;
     load_library: (
@@ -58,23 +58,27 @@ interface IH5PInterface {
     ) => void;
 
     save_content_json: (
-        content_id: string,
+        req: express.Request,
         content_json: JSON,
         done: (error: Error) => void
     ) => void;
     save_content: (
-        content_id: string,
+        req: express.Request,
         file_name: string,
         content: Buffer
-    ) => void;
+    ) => Promise<boolean>;
     save_h5p_json: (
-        content_id: string,
+        req: express.Request,
         h5p_json: JSON,
         done: (error: Error) => void
     ) => void;
+    upload_complete: (req: express.Request) => Promise<{}>;
 
     library_dir: string;
     core_dir: string;
+
+    max_concurrent: number;
+    max_queued: number;
 
     integration: IIntegration;
 }

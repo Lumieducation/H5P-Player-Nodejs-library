@@ -37,10 +37,13 @@ export interface IH5PInterface {
         h5p_json: JSON,
         done: (error: Error) => void
     ) => void;
-    upload_complete?: (req: express.Request) => void;
+    upload_complete: (req: express.Request) => Promise<{}>;
 
     library_dir: string;
     core_dir: string;
+
+    max_concurrent: number;
+    max_queued: number;
 
     integration: IIntegration;
 }
