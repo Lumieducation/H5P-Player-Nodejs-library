@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as mkdirp from 'mkdirp';
+import * as shortid from 'shortid';
 
 import { IH5PInterface, IContent, IH5P } from './types';
 
@@ -148,6 +149,15 @@ const h5pinterface: IH5PInterface = {
     upload_complete: (req: express.Request) =>
         new Promise((resolve, reject) => {
             resolve();
+        }),
+
+    handle_response: (req: express.Request, res: express.Response) => {
+        res.redirect(req.baseUrl + '?content_id=' + req.query.content_id);
+    },
+
+    generate_id: (req: express.Request) =>
+        new Promise((resolve, reject) => {
+            resolve(shortid());
         }),
 
     library_dir: path.resolve('') + '/' + process.env.H5P_LIB,

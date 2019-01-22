@@ -38,6 +38,8 @@ export interface IH5PInterface {
         done: (error: Error) => void
     ) => void;
     upload_complete: (req: express.Request) => Promise<{}>;
+    handle_response: (req: express.Request, res: express.Response) => void;
+    generate_id: (req: express.Request) => Promise<string>;
 
     library_dir: string;
     core_dir: string;

@@ -197,12 +197,8 @@ export default function(h5pinterface: IH5PInterface): express.Router {
                     )
                 ) +
                 '</script>' +
-                '<script> H5PIntegration.contents["cid-' +
-                content_id +
-                '"].contentUserData = parent.__H5P_USERDATA; </script>' +
-                '<script>' +
-                'window.H5PIntegration.contents = window.H5PIntegration.contents || {}; \n' +
-                'window.H5PIntegration.contents["cid-' +
+                '<script>window.H5PIntegration.contents = window.H5PIntegration.contents || {}; </script>' +
+                '<script>window.H5PIntegration.contents["cid-' +
                 content_id +
                 '"] = ' +
                 JSON.stringify({
@@ -237,6 +233,9 @@ export default function(h5pinterface: IH5PInterface): express.Router {
                     scripts: dependencies.js
                 }) +
                 '</script>' +
+                '<script>window.H5PIntegration.contents["cid-' +
+                content_id +
+                '"].contentUserData = parent.__H5P_USERDATA; </script>' +
                 '<script src="' +
                 req.baseUrl +
                 '/core' +
@@ -300,29 +299,23 @@ export default function(h5pinterface: IH5PInterface): express.Router {
             return res.status(400).send('only .h5p files are allowed');
         }
 
-        req.query.content_id =
-            req.query.content_id ||
-            path.basename(
-                req.files.file.name,
-                path.extname(req.files.file.name)
-            );
+        h5pinterface.generate_id(req).then((id: string) => {
+            req.query.content_id = id;
 
-        const content_id = req.query.content_id;
+            const content_id = id;
 
-        move_file_and_extract(req.files.file, content_id)
-            .then(() => save_content(content_id, h5pinterface, req))
-            .then(() => save_content_json(content_id, h5pinterface, req))
-            .then(() => copy_libs(content_id, h5pinterface))
-            .then(() => save_h5p_json(content_id, h5pinterface, req))
-            .then(() => h5pinterface.upload_complete(req))
-            .then(() => clean_tmp(content_id))
-            .then(() => {
-                res.redirect(req.baseUrl + '?content_id=' + content_id);
-            })
-            .catch(error => {
-                // h5pinterface.handle_error(req, res, error);
-                res.status(500).end();
-            });
+            move_file_and_extract(req.files.file, content_id)
+                .then(() => save_content(content_id, h5pinterface, req))
+                .then(() => save_content_json(content_id, h5pinterface, req))
+                .then(() => copy_libs(content_id, h5pinterface))
+                .then(() => save_h5p_json(content_id, h5pinterface, req))
+                .then(() => h5pinterface.upload_complete(req))
+                .then(() => clean_tmp(content_id))
+                .then(() => h5pinterface.handle_response(req, res))
+                .catch(error => {
+                    res.status(500).end();
+                });
+        });
     });
 
     return router;
