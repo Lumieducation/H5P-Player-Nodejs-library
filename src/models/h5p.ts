@@ -13,7 +13,7 @@ import {
     ICSS
 } from '../types';
 
-import Library from './library';
+import Library from './Library';
 
 export default class H5P implements IH5P {
     public content: IContent;
@@ -105,7 +105,9 @@ export default class H5P implements IH5P {
         if (dependency.preloadedDependencies) {
             dependency.preloadedDependencies.forEach((_dep: IDependency) => {
                 const _lib = new Library(
-                    _dep,
+                    _dep.machineName,
+                    _dep.majorVersion,
+                    _dep.minorVersion,
                     this.h5pinterface,
                     (error, library) => {
                         this.load_dependency(library);
