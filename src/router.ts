@@ -7,10 +7,10 @@ import * as copydir from 'copy-dir';
 import * as recursiveReadDir from 'recursive-readdir';
 import * as PromiseQueue from 'promise-queue';
 import * as rimraf from 'rimraf';
-
+import { assign } from 'lodash';
 import { IH5PInterface, IUploadRequest } from './types';
 
-import { resolve_dependencies } from './utils';
+import { resolve_dependencies, parse_library } from './utils';
 
 import content_type_cache from './content_type_cache';
 
@@ -1315,7 +1315,41 @@ export default function(h5pinterface: IH5PInterface): express.Router {
     });
 
     router.post('/editor', (req: IUploadRequest, res: express.Response) => {
-        res.status(200).end();
+        const lib = parse_library(req.body.library);
+
+        const _lib = new Library(
+            lib.machineName,
+            lib.majorVersion,
+            lib.minorVersion,
+            h5pinterface,
+            (error, library) => {
+                const h5p_json = assign({}, req.body.params.metadata, {
+                    mainLibrary: lib.machineName,
+                    preloadedDependencies: [
+                        lib,
+                        ...library.preloadedDependencies
+                    ]
+                });
+
+                const content_json = req.body.params.params;
+
+                h5pinterface.save_h5p_json(req, h5p_json, _error => {
+                    if (_error) {
+                        return res.status(500).json(error);
+                    }
+
+                    h5pinterface.save_content_json(
+                        req,
+                        content_json,
+                        save_content_json_error => {
+                            res.redirect(
+                                '/?content_id=' + req.query.content_id
+                            );
+                        }
+                    );
+                });
+            }
+        );
     });
 
     router.post('/', (req: IUploadRequest, res: express.Response) => {
