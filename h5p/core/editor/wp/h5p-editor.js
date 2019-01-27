@@ -63,9 +63,9 @@ var ns = H5PEditor;
                     // Validate mandatory main title. Prevent submitting if that's not set.
                     // Deliberatly doing it after getParams(), so that any other validation
                     // problems are also revealed
-                    if (!h5peditor.isMainTitleSet()) {
-                        return event.preventDefault();
-                    }
+                    // if (!h5peditor.isMainTitleSet()) {
+
+                    // }
 
                     // Set main library
                     $library.val(h5peditor.getLibrary());
@@ -73,6 +73,16 @@ var ns = H5PEditor;
                     // Set params
                     $params.val(JSON.stringify(params));
 
+                    $.ajax({
+                        type: 'POST',
+                        data: { params, library: h5peditor.getLibrary() },
+                        success: function(res) {
+                            console.log('success', res);
+                        },
+                        dataType: 'application/json'
+                    });
+
+                    return event.preventDefault();
                     // TODO - Calculate & set max score
                     // $maxscore.val(h5peditor.getMaxScore(params.params));
                 }
