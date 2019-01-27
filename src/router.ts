@@ -86,6 +86,18 @@ export default function(h5pinterface: IH5PInterface): express.Router {
                 // res.status(200)
                 break;
 
+            case 'files':
+                const file = (req as any).files.file;
+                h5pinterface
+                    .save_content(req, file.name, file.data)
+                    .then(save => {
+                        res.status(200).json({
+                            mine: file.mimetype,
+                            path: 'images/' + file.name
+                        });
+                    });
+                break;
+
             default:
                 res.status(400).end();
         }
@@ -484,7 +496,7 @@ export default function(h5pinterface: IH5PInterface): express.Router {
                 Object.assign(
                     {
                         baseUrl: req.protocol + '://' + req.headers.host,
-                        url: '/wp-content/uploads/h5p',
+                        url: req.baseUrl,
                         postUserStatistics: true,
                         ajax: {
                             setFinished:
@@ -592,7 +604,7 @@ export default function(h5pinterface: IH5PInterface): express.Router {
                         loadedJs: [],
                         loadedCss: [],
                         editor: {
-                            filesPath: '/wp-content/uploads/h5p/editor',
+                            filesPath: req.baseUrl + '/content',
                             fileIcon: {
                                 path:
                                     'http://lumi.education/core/editor/images/binary-file.png',
