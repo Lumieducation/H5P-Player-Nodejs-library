@@ -413,6 +413,11 @@ export default function(h5pinterface: IH5PInterface): express.Router {
     });
 
     router.get('/editor', (req: IUploadRequest, res: express.Response) => {
+        if (!req.query.content_id) {
+            return h5pinterface.generate_id(req).then(id => {
+                return res.redirect(req.baseUrl + '/editor?content_id=' + id);
+            });
+        }
         const editor_assets = [
             '/editor/scripts/h5p-hub-client.js',
             '/editor/scripts/h5peditor-editor.js',
