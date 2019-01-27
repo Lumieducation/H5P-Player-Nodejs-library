@@ -120,6 +120,7 @@ var ns = H5PEditor;
             }
         }
 
+        url += window.location.search.replace(/\?/g, '&');
         return url;
     };
 
