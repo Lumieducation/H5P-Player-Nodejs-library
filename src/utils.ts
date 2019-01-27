@@ -53,17 +53,19 @@ export function resolve_dependencies(
         }
     }
 
-    dependenies.forEach(dependency => {
-        const lib = new Library(
-            dependency.machineName,
-            dependency.majorVersion,
-            dependency.minorVersion,
-            h5pinterface,
-            (error, library) => {
-                load(library);
-            }
-        );
-    });
+    if (dependenies) {
+        dependenies.forEach(dependency => {
+            const lib = new Library(
+                dependency.machineName,
+                dependency.majorVersion,
+                dependency.minorVersion,
+                h5pinterface,
+                (error, library) => {
+                    load(library);
+                }
+            );
+        });
+    }
 
     return {
         js: js_dependencies,
