@@ -72,3 +72,19 @@ export function resolve_dependencies(
         css: css_dependencies
     };
 }
+
+export function parse_library(lib: string): IDependency {
+    const _lib = lib.split(' ');
+    const machineName = _lib[0];
+    const majorVersion = parseInt(_lib[1].split('.')[0], 10);
+    const minorVersion = parseInt(_lib[1].split('.')[1], 10);
+
+    return {
+        machineName,
+        majorVersion,
+        minorVersion,
+        preloadedDependencies: [],
+        preloadedCss: [],
+        preloadedJs: []
+    };
+}
