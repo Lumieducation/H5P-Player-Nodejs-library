@@ -604,7 +604,10 @@ export default function(h5pinterface: IH5PInterface): express.Router {
                         loadedJs: [],
                         loadedCss: [],
                         editor: {
-                            filesPath: req.baseUrl + '/content',
+                            filesPath:
+                                req.baseUrl +
+                                '/content/' +
+                                req.query.content_id,
                             fileIcon: {
                                 path:
                                     'http://lumi.education/core/editor/images/binary-file.png',
