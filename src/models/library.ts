@@ -28,16 +28,15 @@ export default class Library implements ILibrary {
     public editorDependencies: IDependency[];
 
     constructor(
-        dependency: IDependency,
+        // dependency: IDependency,
+        machineName: string,
+        majorVersion: number,
+        minorVersion: number,
         h5pinterface: IH5PInterface,
         cb: (error: Error, library: Library) => void
     ) {
         h5pinterface.load_library(
-            dependency.machineName +
-                '-' +
-                dependency.majorVersion +
-                '.' +
-                dependency.minorVersion,
+            machineName + '-' + majorVersion + '.' + minorVersion,
             (error, library) => {
                 Object.assign(this, library);
 
