@@ -15,7 +15,7 @@ import { resolve_dependencies, parse_library } from './utils';
 import content_type_cache from './content_type_cache';
 
 import H5P from './models/h5p';
-import Library from './models/Library';
+import Library from './models/library';
 
 export default function(h5pinterface: IH5PInterface): express.Router {
     mkdirp(path.resolve('tmp'), mkdirp_error => {
