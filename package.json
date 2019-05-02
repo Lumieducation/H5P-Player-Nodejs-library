@@ -11,10 +11,14 @@
         "clean": "rm -rf build && rm -rf dist",
         "uninstall": "npm run clean && rm -rf node_modules",
         "build": "",
-        "lint": ""
+        "lint": "./node_modules/.bin/eslint ./src"
     },
     "author": "Jan Philip Schellenberg",
     "dependencies": {},
-    "devDependencies": {},
+    "devDependencies": {
+        "eslint": "^5.16.0",
+        "eslint-config-airbnb-base": "^13.1.0",
+        "eslint-plugin-import": "^2.17.2"
+    },
     "main": "./build/"
 }
