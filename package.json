@@ -11,14 +11,21 @@
         "clean": "rm -rf build && rm -rf dist",
         "uninstall": "npm run clean && rm -rf node_modules",
         "build": "",
-        "lint": "./node_modules/.bin/eslint ./src"
+        "lint": "./node_modules/.bin/eslint ./src",
+        "test": "./node_modules/.bin/jest",
+        "test:watch": "./node_modules/.bin/jest --watch"
     },
     "author": "Jan Philip Schellenberg",
     "dependencies": {},
     "devDependencies": {
+        "@babel/core": "^7.4.4",
+        "@babel/preset-env": "^7.4.4",
+        "babel-jest": "^24.7.1",
         "eslint": "^5.16.0",
         "eslint-config-airbnb-base": "^13.1.0",
-        "eslint-plugin-import": "^2.17.2"
+        "eslint-config-prettier": "^4.2.0",
+        "eslint-plugin-import": "^2.17.2",
+        "jest": "^24.7.1"
     },
     "main": "./build/"
 }
