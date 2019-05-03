@@ -4,7 +4,7 @@
         "es6": true,
         "node": true
     },
-    "extends": "airbnb-base",
+    "extends": ["airbnb-base", "prettier"],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -14,5 +14,8 @@
         "sourceType": "module"
     },
     "rules": {
+        "camelcase": 0,
+        "global-require": "off",
+        "import/no-dynamic-require": "off"
     }
 }
