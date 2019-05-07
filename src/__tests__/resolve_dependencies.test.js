@@ -2,7 +2,7 @@ const resolve_depedencies = require('../resolve_dependencies');
 const path = require('path');
 
 describe('resolve_dependencies', () => {
-    const library_directory = path.resolve('') + '/test/libraries';
+    const library_directory = path.resolve('') + '/h5p/libraries';
 
     it('test', done => {
         const dependencies = resolve_depedencies(

@@ -2,7 +2,7 @@ const load_library = require('../load_library');
 const path = require('path');
 
 describe('load_library', () => {
-    const library_directory = path.resolve('') + '/test/libraries';
+    const library_directory = path.resolve('') + '/h5p/libraries';
     const library_name = 'H5P.Accordion-1.0';
     it(
         'should load the library from ' +

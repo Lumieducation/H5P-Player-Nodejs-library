@@ -4,18 +4,18 @@ const server = express();
 
 const h5p = require('../src/h5p'); // require('h5p-nodejs-library');
 
-server.use('/h5p', express.static(`${path.resolve('')}/test`));
+server.use('/h5p', express.static(`${path.resolve('')}/h5p`));
 
 server.get('/:content_id', (req, res) => {
-    const h5p_json = require(`${path.resolve('')}/test/content/${
+    const h5p_json = require(`${path.resolve('')}/h5p/content/${
         req.params.content_id
     }/h5p.json`);
 
-    const content_json = require(`${path.resolve('')}/test/content/${
+    const content_json = require(`${path.resolve('')}/h5p/content/${
         req.params.content_id
     }/content/content.json`);
 
-    const library_directory = `${path.resolve('')}/test/libraries`;
+    const library_directory = `${path.resolve('')}/h5p/libraries`;
 
     h5p(
         req.params.content_id,

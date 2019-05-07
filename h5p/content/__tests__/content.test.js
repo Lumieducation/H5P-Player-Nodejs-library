@@ -4,8 +4,8 @@ const h5p = require('../../../src/h5p');
 
 describe('content', () => {
     it('test', done => {
-        const dir = `${path.resolve('')}/test/content`;
-        const library_directory = `${path.resolve('')}/test/libraries`;
+        const dir = `${path.resolve('')}/h5p/content`;
+        const library_directory = `${path.resolve('')}/h5p/libraries`;
 
         fs.readdir(dir, (err, files) => {
             const filtered_files = files.filter(
@@ -15,10 +15,10 @@ describe('content', () => {
             const promises = filtered_files.map(file => {
                 const h5p_json = require(`${path.resolve(
                     ''
-                )}/test/content/${file}/h5p.json`);
+                )}/h5p/content/${file}/h5p.json`);
                 const content_json = require(`${path.resolve(
                     ''
-                )}/test/content/${file}/content/content.json`);
+                )}/h5p/content/${file}/content/content.json`);
 
                 return new Promise(resolve => {
                     h5p(
