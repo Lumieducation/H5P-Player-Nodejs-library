@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const h5p = require('../../../src/h5p');
+const h5p = require('../src/h5p');
 
 describe('content', () => {
     it('test', done => {
