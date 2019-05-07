@@ -1,4 +1,4 @@
-import load_library from './load_library';
+const load_library = require('./load_library');
 
 function resolve_dependencies(dependencies, library_directory) {
     const js_dependencies = [];

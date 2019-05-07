@@ -1,4 +1,4 @@
-import resolve_dependencies from './resolve_dependencies';
+const resolve_dependencies = require('./resolve_dependencies');
 
 function h5p(content_id, h5p_json, content_json, library_directory, options) {
     return new Promise(resolve => {
