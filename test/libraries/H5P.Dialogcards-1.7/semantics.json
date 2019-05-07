@@ -1,0 +1,246 @@
+[
+  {
+    "name": "title",
+    "type": "text",
+    "widget": "html",
+    "label": "Heading",
+    "importance": "high",
+    "optional": true,
+    "tags": [
+      "p",
+      "br",
+      "strong",
+      "em"
+    ]
+  },
+  {
+    "name": "description",
+    "type": "text",
+    "widget": "html",
+    "label": "Task description",
+    "importance": "medium",
+    "default": "",
+    "optional": true,
+    "tags": [
+      "p",
+      "br",
+      "strong",
+      "em"
+    ]
+  },
+  {
+    "name": "dialogs",
+    "type": "list",
+    "importance": "high",
+    "widgets": [
+      {
+        "name": "VerticalTabs",
+        "label": "Default"
+      }
+    ],
+    "label": "Dialogs",
+    "entity": "dialog",
+    "min": 1,
+    "defaultNum": 1,
+    "field": {
+      "name": "question",
+      "type": "group",
+      "label": "Question",
+      "importance": "high",
+      "fields": [
+        {
+          "name": "text",
+          "type": "text",
+          "widget": "html",
+          "tags": [
+            "p",
+            "br",
+            "strong",
+            "em"
+          ],
+          "label": "Text",
+          "importance": "high",
+          "description": "Hint for the first part of the dialogue"
+        },
+        {
+          "name": "answer",
+          "type": "text",
+          "widget": "html",
+          "tags": [
+            "p",
+            "br",
+            "strong",
+            "em"
+          ],
+          "label": "Answer",
+          "importance": "high",
+          "description": "Hint for the second part of the dialogue"
+        },
+        {
+          "name": "image",
+          "type": "image",
+          "label": "Image",
+          "importance": "high",
+          "optional": true,
+          "description": "Optional image for the card. (The card may use just an image, just a text or both)"
+        },
+        {
+          "name": "imageAltText",
+          "type": "text",
+          "label": "Alternative text for the image",
+          "importance": "high",
+          "optional": true
+        },
+        {
+          "name": "audio",
+          "type": "audio",
+          "label": "Audio files",
+          "importance": "low",
+          "optional": true
+        },
+        {
+          "name": "tips",
+          "type": "group",
+          "label": "Tips",
+          "importance": "low",
+          "fields": [
+            {
+              "name": "front",
+              "type": "text",
+              "label": "Tip for text",
+              "importance": "low",
+              "optional": true,
+              "description": "Tip for the first part of the dialogue"
+            },
+            {
+              "name": "back",
+              "type": "text",
+              "label": "Tip for answer",
+              "importance": "low",
+              "optional": true,
+              "description": "Tip for the second part of the dialogue"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "behaviour",
+    "type": "group",
+    "label": "Behavioural settings.",
+    "importance": "low",
+    "description": "These options will let you control how the task behaves.",
+    "optional": true,
+    "fields": [
+      {
+        "name": "enableRetry",
+        "type": "boolean",
+        "label": "Enable \"Retry\" button",
+        "importance": "low",
+        "default": true,
+        "optional": true
+      },
+      {
+        "name": "disableBackwardsNavigation",
+        "type": "boolean",
+        "label": "Disable backwards navigation",
+        "importance": "low",
+        "description": "This option will only allow you to move forward with Dialog Cards",
+        "optional": true,
+        "default": false
+      },
+      {
+        "name": "scaleTextNotCard",
+        "type": "boolean",
+        "label": "Scale the text to fit inside the card",
+        "importance": "low",
+        "description": "Unchecking this option will make the card adapt its size to the size of the text",
+        "default": false
+      },
+      {
+        "name": "randomCards",
+        "type": "boolean",
+        "label": "Randomize cards",
+        "importance": "low",
+        "description": "Enable to randomize the order of cards on display.",
+        "default": false
+      }
+    ]
+  },
+  {
+    "label": "Text for the turn button",
+    "importance": "low",
+    "name": "answer",
+    "type": "text",
+    "default": "Turn",
+    "common": true
+  },
+  {
+    "label": "Text for the next button",
+    "importance": "low",
+    "type": "text",
+    "name": "next",
+    "default": "Next",
+    "common": true
+  },
+  {
+    "name": "prev",
+    "type": "text",
+    "label": "Text for the previous button",
+    "importance": "low",
+    "default": "Previous",
+    "common": true
+  },
+  {
+    "name": "retry",
+    "type": "text",
+    "label": "Text for the retry button",
+    "importance": "low",
+    "default": "Retry",
+    "common": true
+  },
+  {
+    "name": "progressText",
+    "type": "text",
+    "label": "Progress text",
+    "importance": "low",
+    "description": "Available variables are @card and @total.",
+    "default": "Card @card of @total",
+    "common": true
+  },
+  {
+    "name": "cardFrontLabel",
+    "type": "text",
+    "label": "Label for card text",
+    "importance": "low",
+    "description": "Used for accessibility by assistive technologies",
+    "default": "Card front",
+    "common": true
+  },
+  {
+    "name": "cardBackLabel",
+    "type": "text",
+    "label": "Label for card back",
+    "importance": "low",
+    "description": "Used for accessibility by assistive technologies",
+    "default": "Card back",
+    "common": true
+  },
+  {
+    "name": "tipButtonLabel",
+    "type": "text",
+    "label": "Label for the show tip button",
+    "importance": "low",
+    "default": "Show tip",
+    "common": true
+  },
+  {
+    "name": "audioNotSupported",
+    "type": "text",
+    "label": "Audio not supported message",
+    "importance": "low",
+    "common": true,
+    "default": "Your browser does not support this audio"
+  }
+]

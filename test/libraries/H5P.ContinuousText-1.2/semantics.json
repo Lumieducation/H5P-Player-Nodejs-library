@@ -1,0 +1,19 @@
+[
+  {
+    "name": "text",
+    "type": "text",
+    "importance": "high",
+    "widget": "html",
+    "label": "Text",
+    "tags": [
+      "strong",
+      "em",
+      "del",
+      "br",
+      "p",
+      "a",
+      "h2",
+      "h3"
+    ]
+  }
+]

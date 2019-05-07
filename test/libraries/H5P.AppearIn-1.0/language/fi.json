@@ -1,0 +1,20 @@
+{
+  "semantics": [
+    {
+      "label": "Tsätin nimi",
+      "description": "Appear.in-tsätin nimi"
+    },
+    {
+      "label": "Sovita kehykseen",
+      "description": "Sovita tsätti-ikkuna ympäröivään kehykseen. Tämä kumoaa aiemmat leveyden ja pituuden asetukset."
+    },
+    {
+      "label": "Korkeus",
+      "description": "Tsätti-ikkunan korkeus"
+    },
+    {
+      "label": "Leveys",
+      "description": "Tsätti-ikkunan leveys"
+    }
+  ]
+}

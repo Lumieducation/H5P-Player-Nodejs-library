@@ -1,25 +1,25 @@
 {
   "semantics":[
     {
-      "label":"Panels",
-      "entity":"panel",
+      "label":"Панели",
+      "entity":"панель",
       "field":{
-        "label":"Content",
-        "entity":"content",
+        "label":"Содержимое",
+        "entity":"содержимое",
         "fields":[
           {
-            "label":"Title"
+            "label":"Название"
           },
           {
-            "label":"Content type",
-            "entity":"content"
+            "label":"Тип материала",
+            "entity":"Тип материала"
           }
         ]
       }
     },
     {
-      "label":"H tags for labels (does not affect the size of the label)",
-      "description":"The h tag used on the labels. Normally H2 but if this belongs under an H2 heading use H3. Does not affect the size of the labels, only used for semantical purposes.",
+      "label":"H теги используются для меток (не влияют на размер заголовка)",
+      "description":"Теги вида 'h' используются в качестве меток. Обычно используют метку с тегом H2. Однако, в случае, если ваша метка уже находится под заголовком H2, используйте H3. Выбор того или иного тега h не влияет на размер меток, используется только в семантических целях.",
       "options":[
         {
           "label":"H2"

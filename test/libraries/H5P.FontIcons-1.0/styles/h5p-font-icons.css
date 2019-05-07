@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'H5PFontIcons';
+  src:  url('../fonts/h5p.eot?w3m2qr');
+  src:  url('../fonts/h5p.eot?w3m2qr#iefix') format('embedded-opentype'),
+    url('../fonts/h5p.ttf?w3m2qr') format('truetype'),
+    url('../fonts/h5p.woff?w3m2qr') format('woff'),
+    url('../fonts/h5p.svg?w3m2qr#H5PFontIcons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
