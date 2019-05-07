@@ -9,7 +9,7 @@ describe('h5p', () => {
     const library_directory = path.resolve('') + '/test/libraries';
 
     it('should return a string', done => {
-        h5p('test', h5p_json, content_json, library_directory, {
+        h5p('test', h5p_json, content_json, library_directory, '/h5p', {
             integration: {}
         }).then(h5p_page => {
             expect(h5p_page).toBeDefined();
