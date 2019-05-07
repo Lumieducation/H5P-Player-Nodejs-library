@@ -21,9 +21,16 @@ describe('content', () => {
                 )}/test/content/${file}/content/content.json`);
 
                 return new Promise(resolve => {
-                    h5p(file, h5p_json, content_json, library_directory, {
-                        integration: {}
-                    }).then(h5p_page => {
+                    h5p(
+                        file,
+                        h5p_json,
+                        content_json,
+                        library_directory,
+                        '/h5p',
+                        {
+                            integration: {}
+                        }
+                    ).then(h5p_page => {
                         expect(typeof h5p_page).toBe('string');
                         // expect(h5p_page).toEqual(); // TODO: Check against h5p-php-library rendered string.
                         resolve();
