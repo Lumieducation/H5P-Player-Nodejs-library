@@ -17,18 +17,4 @@ describe('h5p', () => {
             done();
         });
     });
-
-    it('should include the integration', done => {
-        const integration = {
-            test: 'test'
-        };
-        h5p('test', h5p_json, content_json, library_directory, {
-            integration
-        }).then(h5p_page => {
-            expect(/H5PIntegration = {"test":"test"};/.test(h5p_page)).toBe(
-                true
-            );
-            done();
-        });
-    });
 });
