@@ -1,10 +1,11 @@
-# h5p-nodejs-library
+# H5P-Nodejs-library
 
-h5p-nodejs-library will be a nodejs-implementation of the [h5p-php-library](https://github.com/h5p/h5p-php-library). It is in a very early development state. Please feel free to contribute.
+The H5P-Nodejs-library is a port of the [H5P-PHP-library](https://github.com/h5p/h5p-php-library) for Nodejs.
+Please note that this project is in a very early and experimental stage. If you have questions or want to contribute, feel free to open issues or pull requests.
 
-## How to use
+This package provides a framework-agnostic function that returns a promise, which resolves to a string. The string is the equivalent to what the H5P-PHP-library would generate and can be integrated via iframe. You will also have to serve the H5P-Core-files.
 
-This package provides a framework-agnostic function that returns a promise, which resolves to a string. The string is the equivalent to what the H5P-php-library would generate and can be integrated via iframe.
+## Signature
 
 ```ts
 h5p(h5p_json: JSON, content_json: JSON, library_directory: string, url_prefix: string, options: Object): Promise<H5PPage>;
@@ -18,9 +19,27 @@ h5p(h5p_json: JSON, content_json: JSON, library_directory: string, url_prefix: s
 | url_prefix        | string | A prefix that is added in front of every js or css file that is loaded via http. |
 | options           | Object |         options.integration will be used as H5PIntegration on the page.          |
 
-See the [example integration for express](./examples/express.js) how to integrate it with exress.
+## How to use
 
-We will provide more examples in the future.
+### 1. Provide H5P-Core files and libraries
+
+See the [example integration for express](./examples/express.js) how to integrate it with express.
+
+You have to provide the H5P-Core and library-files. To do so
+
+1. download the [H5P](./h5p) folder and place it in your project.
+2. Add a route thats serves the H5P-Folder content. (See the [express-example](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/examples/express.js#L8)) - the route has to be added as the `url_prefix` argument to the h5p-function.
+
+### 2. Use the H5P-Nodejs-library
+
+3. install the H5P-Nodejs-library via `npm install --save h5p-nodejs-library`
+4. Require the H5P-Nodejs-Library via `const h5p = require('h5p-nodejs-library')`.
+5. Use the h5p-function to build the H5P-Page. You will have to load the H5P.json and content.json from the .h5p file and provide these as arguments. For all arguments see the Signature.
+6. Serve the generated string as response.
+
+### Adapters
+
+We will provide adapters for express and meteor in the future. If you would like to see another adapter, please make a issue.
 
 ## Development
 
