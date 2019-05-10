@@ -1,7 +1,7 @@
 {
     "name": "h5p-nodejs-library",
-    "version": "v0.0.17",
-    "description": "H5P for Nodejs",
+    "version": "v0.1.0",
+    "description": "The H5P-Nodejs-library is a port of the H5P-PHP-library for Nodejs.",
     "repository": {
         "type": "git",
         "url": "https://github.com/Lumieducation/h5p-nodejs-library"
@@ -28,5 +28,5 @@
         "express": "^4.16.4",
         "jest": "^24.7.1"
     },
-    "main": "./build/"
+    "main": "./src/h5p.js"
 }
