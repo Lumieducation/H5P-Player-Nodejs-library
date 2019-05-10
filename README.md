@@ -1,5 +1,7 @@
 # H5P-Nodejs-library
 
+[![Build Status](https://travis-ci.org/Lumieducation/h5p-nodejs-library.svg?branch=next)](https://travis-ci.org/Lumieducation/h5p-nodejs-library)
+
 The H5P-Nodejs-library is a port of the [H5P-PHP-library](https://github.com/h5p/h5p-php-library) for Nodejs.
 Please note that this project is in a very early and experimental stage. If you have questions or want to contribute, feel free to open issues or pull requests.
 
