@@ -1,0 +1,369 @@
+{
+  "semantics": [
+    {
+      "fields": [
+        {
+          "field": {
+            "fields": [
+              {
+                "field": {
+                  "fields": [
+                    {},
+                    {},
+                    {},
+                    {},
+                    {},
+                    {
+                      "label": "Kommentare",
+                      "description": "Die Kommentare werden angezeigt, wenn der Nutzer die vorgeschlagenen Antworten für alle Schaubilder anzeigt."
+                    },
+                    {
+                      "label": "Kommentare immer anzeigen"
+                    },
+                    {
+                      "label": "Hintergrunddeckkraft"
+                    },
+                    {
+                      "label": "Als Button anzeigen"
+                    },
+                    {
+                      "label": "Buttongröße",
+                      "options": [
+                        {
+                          "label": "Klein"
+                        },
+                        {
+                          "label": "Groß"
+                        }
+                      ]
+                    },
+                    {
+                      "label": "Titel"
+                    },
+                    {
+                      "label": "Das Schaubild, zu dem wir springen",
+                      "options": [
+                        {
+                          "label": "Festgelegtes Schaubild"
+                        },
+                        {
+                          "label": "Nächstes Schaubild"
+                        },
+                        {
+                          "label": "Vorheriges Schaubild"
+                        }
+                      ]
+                    },
+                    {
+                      "label": "Festgelegte Schaubildnummer",
+                      "description": "Nur anwendbar, wenn \"Festgelegtes Schaubild\" gewählt wurde"
+                    },
+                    {
+                      "label": "Unsichtbar",
+                      "description": "Vorgabe-Cursor, kein Titel und kein Tab-Index. Warnung: Nutzer, die beeinträchtigt sind oder nur über eine Tastatur verfügen, werden Probleme mit der Bedienung haben."
+                    }
+                  ]
+                }
+              },
+              {},
+              {
+                "fields": [
+                  {
+                    "label": "Bild",
+                    "description": "Das Hintergrundbild sollte für Breite zu Höhe ein Format von 2:1 haben, um Verzerrungen zu vermeiden. Hochaufgelöste Bilder sehen auf Bildschirmen mit hoher Auflösung besser aus."
+                  },
+                  {
+                    "label": "Wähle eine Farbe",
+                    "default": ""
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {},
+        {
+          "label": "Schlagwortliste"
+        },
+        {
+          "label": "Immer anzeigen"
+        },
+        {
+          "label": "Automatisch verbergen"
+        },
+        {
+          "label": "Undurchlässigkeit"
+        },
+        {
+          "fields": [
+            {
+              "label": "Bild",
+              "description": "Das Hintergrundbild sollte für Breite zu Höhe ein Format von 2:1 haben, um Verzerrungen zu vermeiden. Hochaufgelöste Bilder sehen auf Bildschirmen mit hoher Auflösung besser aus."
+            },
+            {
+              "label": "Wähle eine Farbe",
+              "default": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Verhaltenseinstellungen.",
+      "fields": [
+        {
+          "label": "Übersetzung für \"Slide\"",
+          "default": "Schaubild"
+        },
+        {
+          "label": "Überstezung für \"Score\"",
+          "default": "Punktzahl"
+        },
+        {
+          "label": "Übersetzung für \"Your Score\"",
+          "default": "Deine Punktzahl"
+        },
+        {
+          "label": "Übersetzung für \"Max Score\"",
+          "default": "Maximale Punktzahl"
+        },
+        {
+          "label": "Übersetzung für \"Total\"",
+          "default": "Summe"
+        },
+        {
+          "label": "Übersetzung für \"Total Score\"",
+          "default": "Gesamtsumme"
+        },
+        {
+          "label": "Beschriftung für den \"Lösungen zeigen\"-Button",
+          "default": "Lösungen"
+        },
+        {
+          "label": "Text für den \"Wiederholen\"-Button",
+          "default": "Wiederholen"
+        },
+        {
+          "label": "Beschriftung für den \"Text exportieren\"-Button",
+          "default": "Text exportieren"
+        },
+        {
+          "label": "Beschriftung für den \"Schlagwortliste verbergen\"-Button",
+          "default": "Schlagwortliste verbergen"
+        },
+        {
+          "label": "Beschriftung für den \"Schlagwortliste anzeigen\"-Button",
+          "default": "Schlagwortliste anzeigen"
+        },
+        {
+          "label": "Aktivieren des \"Wiederholen\"-Buttons",
+          "default": "Vollbildmodus"
+        },
+        {
+          "label": "Benutzereingabe erforderlich machen, bevor die Antwort angesehen werden kann",
+          "default": "Vollbild beenden"
+        },
+        {
+          "label": "Beschriftung für \"Vorheriges Schaubild\"",
+          "default": "Vorheriges Schaubild"
+        },
+        {
+          "label": "Beschriftung für \"Nächstes Schaubild\"",
+          "default": "Nächstes Schaubild"
+        },
+        {
+          "label": "Beschriftung für \"Aktuelles Schaubild\"",
+          "default": "Aktuelles Schaubild"
+        },
+        {
+          "label": "Beschriftung für \"Letztes Schaubild\"",
+          "default": "Letztes Schaubild"
+        },
+        {
+          "label": "Beschriftung für \"Lösungsmodus beenden\"",
+          "default": "Lösungsmodus beenden"
+        },
+        {
+          "label": "Beschriftung für \"Lösungsmodus\"",
+          "default": "Lösungsmodus"
+        },
+        {
+          "label": "Texthinweis bei mehreren Aufgaben auf einer Seite",
+          "default": "Mehrere Aufgaben"
+        },
+        {
+          "label": "Texthinweis für die Punktzahl",
+          "default": "Du hast erreicht:"
+        },
+        {
+          "label": "Texthinweis für \"Auf Facebook teilen\"",
+          "default": "Auf Facebook teilen"
+        },
+        {
+          "label": "Texthinweis für \"Auf Twitter teilen\"",
+          "default": "Auf Twitter teilen"
+        },
+        {
+          "label": "Texthinweis für \"Auf Google+ teilen\"",
+          "default": "Auf Google+ teilen"
+        },
+        {
+          "label": "Titel für das Übersichtsschaubild",
+          "default": "Zusammenfassung"
+        },
+        {
+          "label": "Titel für das \"Kommentare zeigen\"-Icon",
+          "default": "Kommentare zeigen"
+        },
+        {
+          "label": "Beschriftung für den \"Drucken\"-Button",
+          "default": "Drucken"
+        },
+        {
+          "label": "Zugang zum Druck-Dialog",
+          "default": "Wie möchtest du diese Präsentation drucken?"
+        },
+        {
+          "label": "Beschriftung für den \"Alle Schaubilder drucken\"-Button",
+          "default": "Alle Schaubilder drucken"
+        },
+        {
+          "label": "Beschriftung für den \"Aktuelles Schaubild drucken\"-Button",
+          "default": "Aktuelles Schaubild drucken"
+        },
+        {
+          "label": "Beschriftung für Schaubild ohne Titel",
+          "default": "Kein Titel"
+        },
+        {
+          "label": "Erklärung der Schaubildnavigation für technische Hilfsmittel",
+          "default": "Verwende die Cursortasten für links und rechts, um die Schaubilder in die jeweilige Richtung zu verschieben, wenn der Präsentationsbereich angewählt ist"
+        },
+        {
+          "label": "Beschriftung für Präsentationsbereich für technische Hilfsmittel",
+          "default": "Präsentationsbereich. Verwende die Cursortasten links und rechts um zwischen den Schaubildern zu navigieren."
+        },
+        {
+          "label": "Beschriftung für nicht abgeschlossene Interaktionen",
+          "default": "@slideName enthält eine nicht abgeschlossene Interaktion"
+        },
+        {
+          "label": "Beschriftung für abgeschlossene Interaktionen",
+          "default": "@slideName wurde abgeschlossen"
+        },
+        {
+          "label": "Beschriftung für den Schaubildzähler. Variablen sind @index, @total",
+          "default": "Schaubild @index von @total"
+        },
+        {
+          "label": "Beschriftung für Schaubilder, die nur richtige Antworten enthalten",
+          "default": "@slideName enthält nur richtige Antworten"
+        },
+        {
+          "label": "Beschriftung für Schaubilder, die falsche Antworten enthalten",
+          "default": "@slideName enthält falsche Antworten"
+        },
+        {
+          "label": "Beschriftung für den Social-Sharing-Balken",
+          "default": "Ergebnis teilen"
+        },
+        {
+          "label": "Ansage der Gesamtpunktzahl für technische Hilfsmittel",
+          "default": "Du hast insgesamt @score von @maxScore Punkten erreicht.",
+          "description": "Verfügbare Variablen sind @score und @maxScore"
+        }
+      ]
+    },
+    {
+      "label": "Verhaltenseinstellungen",
+      "description": "Mit diesen Optionen kannst du diverse Einstellungen überschreiben.",
+      "fields": [
+        {
+          "label": "\"Active Surface\"-Modus aktivieren",
+          "description": "Entfernt die Bedienelemente für den Nutzer. Benutze \"Gehe zu Schaubild\" zum navigieren."
+        },
+        {
+          "label": "Übersichtsschaubild verbergen",
+          "description": "Verbirgt das Übersichtsschaubild"
+        },
+        {
+          "label": "Überschreiben des \"Lösungen anzeigen\"-Buttons",
+          "description": "Diese Option gibt an, ob der \"Lösung anzeigen\"-Button für alle Fragen angezeigt, ausgeblendet oder für jede Frage individuell konfiguriert wird.",
+          "options": [
+            {
+              "label": "Anzeigen"
+            },
+            {
+              "label": "Ausblenden"
+            }
+          ]
+        },
+        {
+          "label": "Überschreiben des \"Wiederholen\"-Buttons",
+          "description": "Diese Option gibt an, ob der \"Wiederholen\" Button für alle Fragen angezeigt, ausgeblendet oder für jede Frage individuell konfiguriert wird.",
+          "options": [
+            {
+              "label": "Anzeigen"
+            },
+            {
+              "label": "Ausblenden"
+            }
+          ]
+        },
+        {
+          "label": "\"Drucken\"-Button einblenden",
+          "description": "Zeigt den \"Drucken\"-Button an."
+        },
+        {
+          "label": "Einstellungen für Soziale Netzwerke",
+          "description": "Diese Optionen überschreiben die Einstellungen für Soziale Netzwerke.",
+          "fields": [
+            {
+              "label": "Facebook-Icon anzeigen"
+            },
+            {
+              "label": "Facebook-Teilen-Einstellungen",
+              "fields": [
+                {
+                  "label": "Facebook-Teilen-Link",
+                  "default": "@currentpageurl"
+                },
+                {
+                  "label": "Mustersatz für das Teilen auf Facebook",
+                  "default": "Ich habe @score von @maxScore bei der Aufgabe @currentpageurl erreicht."
+                }
+              ]
+            },
+            {
+              "label": "Twitter-Icon anzeigen"
+            },
+            {
+              "label": "Twitter-Teilen-Einstellungen",
+              "fields": [
+                {
+                  "label": "Mustersatz für das Teilen auf Twitter",
+                  "default": "Ich habe @score von @maxScore bei der Aufgabe @currentpageurl erreicht."
+                },
+                {
+                  "label": "Twitter-Teilen-Link",
+                  "default": "@currentpageurl"
+                },
+                {
+                  "label": "Twitter-Hashtags",
+                  "default": "h5p, Kurs"
+                }
+              ]
+            },
+            {
+              "label": "Google+-Icon zeigen"
+            },
+            {
+              "label": "Google+-Link",
+              "default": "@currentpageurl"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

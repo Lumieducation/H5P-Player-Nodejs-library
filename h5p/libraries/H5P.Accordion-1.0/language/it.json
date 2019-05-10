@@ -1,0 +1,36 @@
+{
+  "semantics":[
+    {
+      "label":"Pannelli",
+      "entity":"panel",
+      "field":{
+        "label":"Contenuto",
+        "entity":"contenuto",
+        "fields":[
+          {
+            "label":"Titolo"
+          },
+          {
+            "label":"Tipo di contenuto",
+            "entity":"contenuto"
+          }
+        ]
+      }
+    },
+    {
+      "label":"Tag H per etichette (non influisce sulla dimensione dell'etichetta)",
+      "description":"Tag H utilizzato sulle etichette. Normalmente H2, ma se questo si trova sotto un'intestazione H2 usa H3. Non influisce sulla dimensione delle etichette; usato solo per scopi semantici.",
+      "options":[
+        {
+          "label":"H2"
+        },
+        {
+          "label":"H3"
+        },
+        {
+          "label":"H4"
+        }
+      ]
+    }
+  ]
+}

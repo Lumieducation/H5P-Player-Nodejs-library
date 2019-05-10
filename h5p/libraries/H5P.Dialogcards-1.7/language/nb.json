@@ -1,0 +1,116 @@
+{
+  "semantics": [
+    {
+      "label": "Heading"
+    },
+    {
+      "label": "Oppgavetekst",
+      "default": ""
+    },
+    {
+      "widgets": [
+        {
+          "label": "Default"
+        }
+      ],
+      "label": "Dialogkort",
+      "entity": "dialogkort",
+      "field": {
+        "label": "Dialogkort",
+        "fields": [
+          {
+            "label": "Tekst",
+            "description": "Nøkkelord til første del av dialogen"
+          },
+          {
+            "label": "Svar",
+            "description": "Nøkkelord til neste del av dialogen"
+          },
+          {
+            "label": "Bilde",
+            "description": "Valgfritt bilde for kortet.(Kortet kan bruke kun bilde, kun tekst, eller begge)"
+          },
+          {
+            "label": "Alternative text for the image"
+          },
+          {
+            "label": "Audio files"
+          },
+          {
+            "label": "Tips",
+            "fields": [
+              {
+                "label": "Tip for text",
+                "description": "Tip for the first part of the dialogue"
+              },
+              {
+                "label": "Tip for answer",
+                "description": "Tip for the second part of the dialogue"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Innstillinger for oppgave-oppførsel",
+      "description": "Disse instillingene lar deg bestemme hvordan oppgavetypen skal oppføre seg.",
+      "fields": [
+        {
+          "label": "Aktiver \"Prøv igjen\"-knapp"
+        },
+        {
+          "label": "Slå av tilbakenavigering",
+          "description": "Dette valget betyr at man bare kan navigere fremover"
+        },
+        {
+          "label": "Skaler teksten til å få pplass i kortet",
+          "description": "Når man slår av denne vil kortets størrelse endre seg iforhold til mengde tekst"
+        },
+        {
+          "label": "Randomize cards",
+          "description": "Enable to randomize the order of cards on display."
+        }
+      ]
+    },
+    {
+      "label": "Tekst til \"Snu\" knappen",
+      "default": "Snu"
+    },
+    {
+      "label": "Tekst til \"Neste\" knappen",
+      "default": "Neste"
+    },
+    {
+      "label": "Tekst til \"Forrige\" knappen",
+      "default": "Forrige"
+    },
+    {
+      "label": "Tekst til \"Omstart\" knappen",
+      "default": "Prøv igjen"
+    },
+    {
+      "label": "Fremgangstekst",
+      "description": "Tilgjengelig variabler er @card og @total.",
+      "default": "Kort @card av @total"
+    },
+    {
+      "label": "Label for card text",
+      "description": "Used for accessibility by assistive technologies",
+      "default": "Card front"
+    },
+    {
+      "label": "Label for card back",
+      "description": "Used for accessibility by assistive technologies",
+      "default": "Card back"
+    },
+    {
+      "label": "Label for the show tip button",
+      "default": "Show tip"
+    },
+    {
+      "label": "Audio not supported message",
+      "default": "Your browser does not support this audio"
+    }
+  ]
+}

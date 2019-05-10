@@ -1,0 +1,20 @@
+{
+  "semantics": [
+    {
+      "label": "Raumname",
+      "description": "Name des Raums"
+    },
+    {
+      "label": "An den Container anpassen",
+      "description": "Passt den Raum dem Container an, überschreibt jegliche Höhe und Breite mit 100 %."
+    },
+    {
+      "label": "Höhe",
+      "description": "Setze die Höhe des Chatrooms"
+    },
+    {
+      "label": "Breite",
+      "description": "Setze die Breite des Chatrooms"
+    }
+  ]
+}

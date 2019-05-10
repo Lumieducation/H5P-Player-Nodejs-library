@@ -1,0 +1,116 @@
+{
+  "semantics": [
+    {
+      "label": "Título"
+    },
+    {
+      "label": "Descrição da tarefa",
+      "default": ""
+    },
+    {
+      "widgets": [
+        {
+          "label": "Padrão"
+        }
+      ],
+      "label": "Diálogos",
+      "entity": "dialog",
+      "field": {
+        "label": "Questão",
+        "fields": [
+          {
+            "label": "Texto",
+            "description": "Texto da primeira parte do diálogo"
+          },
+          {
+            "label": "Resposta",
+            "description": "Texto da segunda parte do diálogo"
+          },
+          {
+            "label": "Imagem",
+            "description": "Imagem opcional para o cartão. (O cartão pode conter apenas uma imagem, apenas um texto, ou ambos)"
+          },
+          {
+            "label": "Texto alternativo para a imagem"
+          },
+          {
+            "label": "Arquivos de áudio"
+          },
+          {
+            "label": "Dicas",
+            "fields": [
+              {
+                "label": "Dica para texto",
+                "description": "Dica para a primeira parte do diálogo"
+              },
+              {
+                "label": "Dica para resposta",
+                "description": "Dica para a segunda parte do diálogo"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Configurações comportamentais.",
+      "description": "stas opções permitirão que você controle como a tarefa se comporta.",
+      "fields": [
+        {
+          "label": "Habilitar botão \"Tentar novamente\""
+        },
+        {
+          "label": "Desabilitar navegação para trás",
+          "description": "Esta opção permitirá apenas que você navegue para frente nos cartões de diálogo"
+        },
+        {
+          "label": "Dimensionar o texto para ajustar-se dentro do cartão",
+          "description": "Desmarcar esta opção fará com que o cartão adapte seu tamanho ao tamanho do texto"
+        },
+        {
+          "label": "Aleatorizar cartões",
+          "description": "Habilite para aleatorizar a ordem em que os cartões são exibidos."
+        }
+      ]
+    },
+    {
+      "label": "Texto para o botão de virar",
+      "default": "Virar"
+    },
+    {
+      "label": "Texto para o botão de próximo",
+      "default": "Próximo"
+    },
+    {
+      "label": "Texto para o botão de anterior",
+      "default": "Anterior"
+    },
+    {
+      "label": "Texto para o botão de tentar novamente",
+      "default": "Tentar novamente"
+    },
+    {
+      "label": "Texto de progresso",
+      "description": "Variáveis disponíveis são @card e @total.",
+      "default": "Cartão @card de @total"
+    },
+    {
+      "label": "Rótulo para o texto do cartão",
+      "description": "Usado para acessibilidade por tecnologias assistivas",
+      "default": "Frente do cartão"
+    },
+    {
+      "label": "Rótulo para verso do cartão",
+      "description": "Usado para acessibilidade por tecnologias assistivas",
+      "default": "Verso do cartão"
+    },
+    {
+      "label": "Rótulo para o botão de mostrar dica",
+      "default": "Mostrar dica"
+    },
+    {
+      "label": "Mensagem de áudio não suportado",
+      "default": "Seu navegador não suporta este áudio"
+    }
+  ]
+}

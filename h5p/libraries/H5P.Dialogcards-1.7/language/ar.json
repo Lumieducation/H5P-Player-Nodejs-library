@@ -1,0 +1,116 @@
+{
+  "semantics": [
+    {
+      "label": "Heading"
+    },
+    {
+      "label": "وصف النشاط",
+      "default": ""
+    },
+    {
+      "widgets": [
+        {
+          "label": "Default"
+        }
+      ],
+      "label": "الحوارات",
+      "entity": "الحوار",
+      "field": {
+        "label": "السؤال",
+        "fields": [
+          {
+            "label": "نص",
+            "description": "تلميح للجزء الأول من الحوار"
+          },
+          {
+            "label": "الاجابة",
+            "description": "تلميح للجزء الثاني من الحوار"
+          },
+          {
+            "label": "Image",
+            "description": "Optional image for the card. (The card may use just an image, just a text or both)"
+          },
+          {
+            "label": "Alternative text for the image"
+          },
+          {
+            "label": "Audio files"
+          },
+          {
+            "label": "Tips",
+            "fields": [
+              {
+                "label": "Tip for text",
+                "description": "Tip for the first part of the dialogue"
+              },
+              {
+                "label": "Tip for answer",
+                "description": "Tip for the second part of the dialogue"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Behavioural settings",
+      "description": "These options will let you control how the task behaves.",
+      "fields": [
+        {
+          "label": "Enable \"Retry\" button"
+        },
+        {
+          "label": "Disable backwards navigation",
+          "description": "This option will only allow you to move forward with Dialog Cards"
+        },
+        {
+          "label": "Scale the text to fit inside the card",
+          "description": "Unchecking this option will make the card adapt its size to the size of the text"
+        },
+        {
+          "label": "Randomize cards",
+          "description": "Enable to randomize the order of cards on display."
+        }
+      ]
+    },
+    {
+      "label": "نص زر التدوير",
+      "default": "Turn"
+    },
+    {
+      "label": "نص الزر التالي",
+      "default": "Next"
+    },
+    {
+      "label": "نص الزر السابق",
+      "default": "Previous"
+    },
+    {
+      "label": "النص الزر إعادة المحاولة",
+      "default": "Retry"
+    },
+    {
+      "label": "نص التقدم",
+      "description": "المتغيرات المتاحة هي البطاقة والمجموع",
+      "default": "Card @card of @total"
+    },
+    {
+      "label": "Label for card text",
+      "description": "Used for accessibility by assistive technologies",
+      "default": "Card front"
+    },
+    {
+      "label": "Label for card back",
+      "description": "Used for accessibility by assistive technologies",
+      "default": "Card back"
+    },
+    {
+      "label": "Label for the show tip button",
+      "default": "Show tip"
+    },
+    {
+      "label": "Audio not supported message",
+      "default": "Your browser does not support this audio"
+    }
+  ]
+}

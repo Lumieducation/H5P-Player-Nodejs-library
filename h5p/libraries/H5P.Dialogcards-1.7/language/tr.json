@@ -1,0 +1,116 @@
+{
+  "semantics": [
+    {
+      "label": "Heading"
+    },
+    {
+      "label": "Etkinlik açıklaması",
+      "default": ""
+    },
+    {
+      "widgets": [
+        {
+          "label": "Varsayılan"
+        }
+      ],
+      "label": "Diyaloglar",
+      "entity": "dialog",
+      "field": {
+        "label": "Soru",
+        "fields": [
+          {
+            "label": "Metin",
+            "description": "Diyaloğun ilk bölümü için ipucu"
+          },
+          {
+            "label": "Cevap",
+            "description": "Diyaloğun ikinci bölümü için ipucu"
+          },
+          {
+            "label": "Görsel",
+            "description": "Kart için isteğe bağlı görsel. (Kart sadece bir görsel, sadece bir metin ya da ikisini birden içerebilir.)"
+          },
+          {
+            "label": "Görsel için alternatif metin"
+          },
+          {
+            "label": "Ses dosyaları"
+          },
+          {
+            "label": "İpuçları",
+            "fields": [
+              {
+                "label": "İpucu metni",
+                "description": "Diyaloğun ilk bölümü için ipucu"
+              },
+              {
+                "label": "Cevap için ipucu",
+                "description": "Diyaloğun ikinci bölümü için ipucu"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Davranış ayarları.",
+      "description": "Bu seçenekler etkinliğin nasıl gerçekleşeceğini kontrol etmenizi sağlar.",
+      "fields": [
+        {
+          "label": "Açık \"Yeniden dene\" düğmesi"
+        },
+        {
+          "label": "Geri dönüş gezinmesini kapat",
+          "description": "Bu seçenek Diyalog Kartlarında sadece ileri gidilmesini sağlar."
+        },
+        {
+          "label": "Metni karta sığacak şekilde boyutlandır",
+          "description": "Bu seçeneği kapatarak kartın boyutunun metne uygun şekilde değişmesini sağlayabilirsiniz."
+        },
+        {
+          "label": "Kartları karıştır",
+          "description": "Kartların gösterilme sırasının rasgele olmasını sağlar."
+        }
+      ]
+    },
+    {
+      "label": "Döndür düğmesinin metni",
+      "default": "Çevir"
+    },
+    {
+      "label": "sonraki düğmesinin metni",
+      "default": "Sonraki"
+    },
+    {
+      "label": "Önceki düğmesinin metni",
+      "default": "Önceki"
+    },
+    {
+      "label": "Yeniden dene düğmesinin metni",
+      "default": "Yeniden dene"
+    },
+    {
+      "label": "İlerleme metni",
+      "description": "Olası değişkenler @card ve @total.",
+      "default": "Kart @card / @total"
+    },
+    {
+      "label": "Kart metni etiketi ",
+      "description": "Destek teknolojileri tarafından kullanılır",
+      "default": "Kartın önü"
+    },
+    {
+      "label": "Kartın arkası metni ",
+      "description": "Destek teknolojileri tarafından kullanılır",
+      "default": "Kartın arkası"
+    },
+    {
+      "label": "İpucu düğmesinin etiketi",
+      "default": "İpucunu göster"
+    },
+    {
+      "label": "Ses desteklenmiyor mesajı",
+      "default": "İnternet tarayıcınız bu sesi desteklemiyor"
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "semantics": [
+    {
+      "label": "Heading"
+    },
+    {
+      "label": "Beschreibung der Aufgabe",
+      "default": ""
+    },
+    {
+      "widgets": [
+        {
+          "label": "Default"
+        }
+      ],
+      "label": "Dialoge",
+      "entity": "Dialog",
+      "field": {
+        "label": "Frage",
+        "fields": [
+          {
+            "label": "Text",
+            "description": "Hinweis für den ersten Teil des Dialogs"
+          },
+          {
+            "label": "Antwort",
+            "description": "Hinweis für den zweiten Teil des Dialogs"
+          },
+          {
+            "label": "Bild",
+            "description": "Optionales Bild für die Karte. (Die Karte kann ein Bild benutzen, Text oder beides.)"
+          },
+          {
+            "label": "Alternative text for the image"
+          },
+          {
+            "label": "Audio files"
+          },
+          {
+            "label": "Tips",
+            "fields": [
+              {
+                "label": "Tip for text",
+                "description": "Tip for the first part of the dialogue"
+              },
+              {
+                "label": "Tip for answer",
+                "description": "Tip for the second part of the dialogue"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Verhaltenssteuerung",
+      "description": "Diese Optionen legen fest, wie sich die Aufgabe verhält.",
+      "fields": [
+        {
+          "label": "\"Wiederholen\"-Button anzeigen"
+        },
+        {
+          "label": "Rückwärts-Navigation ausstellen",
+          "description": "Diese Option sorgt dafür, dass man nur vorwärts durch die Dialogkarten navigieren kann."
+        },
+        {
+          "label": "Die Textgröße skalieren, um in die Karte zu passen",
+          "description": "Wenn diese Option abgewählt wird, passt sich die Größe der Karte der Textgröße an."
+        },
+        {
+          "label": "Karten mischen",
+          "description": "Anwählen, um die Karten zufällig anzuordnen."
+        }
+      ]
+    },
+    {
+      "label": "Text für den \"Umdrehen\"-Button",
+      "default": "Umdrehen"
+    },
+    {
+      "label": "Text für den \"Weiter\"-Button",
+      "default": "Weiter"
+    },
+    {
+      "label": "Text für den \"Zurück\"-Button",
+      "default": "Zurück"
+    },
+    {
+      "label": "Text für den \"Wiederholen\"-Button",
+      "default": "Wiederholen"
+    },
+    {
+      "label": "Fortschrittsanzeigetext",
+      "description": "Verfügbare Variablen sind @card und @total.",
+      "default": "Karte @card von @total"
+    },
+    {
+      "label": "Label for card text",
+      "description": "Used for accessibility by assistive technologies",
+      "default": "Card front"
+    },
+    {
+      "label": "Label for card back",
+      "description": "Used for accessibility by assistive technologies",
+      "default": "Card back"
+    },
+    {
+      "label": "Label for the show tip button",
+      "default": "Show tip"
+    },
+    {
+      "label": "Audio not supported message",
+      "default": "Your browser does not support this audio"
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "semantics": [
+    {
+      "label": "Heading"
+    },
+    {
+      "label": "Task description",
+      "default": ""
+    },
+    {
+      "widgets": [
+        {
+          "label": "Default"
+        }
+      ],
+      "label": "Dialogs",
+      "entity": "dialog",
+      "field": {
+        "label": "Question",
+        "fields": [
+          {
+            "label": "Text",
+            "description": "Hint for the first part of the dialogue"
+          },
+          {
+            "label": "Answer",
+            "description": "Hint for the second part of the dialogue"
+          },
+          {
+            "label": "Image",
+            "description": "Optional image for the card. (The card may use just an image, just a text or both)"
+          },
+          {
+            "label": "Alternative text for the image"
+          },
+          {
+            "label": "Audio files"
+          },
+          {
+            "label": "Tips",
+            "fields": [
+              {
+                "label": "Tip for text",
+                "description": "Tip for the first part of the dialogue"
+              },
+              {
+                "label": "Tip for answer",
+                "description": "Tip for the second part of the dialogue"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Behavioural settings.",
+      "description": "These options will let you control how the task behaves.",
+      "fields": [
+        {
+          "label": "Enable \"Retry\" button"
+        },
+        {
+          "label": "Disable backwards navigation",
+          "description": "This option will only allow you to move forward with Dialog Cards"
+        },
+        {
+          "label": "Scale the text to fit inside the card",
+          "description": "Unchecking this option will make the card adapt its size to the size of the text"
+        },
+        {
+          "label": "Randomize cards",
+          "description": "Enable to randomize the order of cards on display."
+        }
+      ]
+    },
+    {
+      "label": "Text for the turn button",
+      "default": "Turn"
+    },
+    {
+      "label": "Text for the next button",
+      "default": "Next"
+    },
+    {
+      "label": "Text for the previous button",
+      "default": "Previous"
+    },
+    {
+      "label": "Text for the retry button",
+      "default": "Retry"
+    },
+    {
+      "label": "Progress text",
+      "description": "Available variables are @card and @total.",
+      "default": "Card @card of @total"
+    },
+    {
+      "label": "Label for card text",
+      "description": "Used for accessibility by assistive technologies",
+      "default": "Card front"
+    },
+    {
+      "label": "Label for card back",
+      "description": "Used for accessibility by assistive technologies",
+      "default": "Card back"
+    },
+    {
+      "label": "Label for the show tip button",
+      "default": "Show tip"
+    },
+    {
+      "label": "Audio not supported message",
+      "default": "Your browser does not support this audio"
+    }
+  ]
+}

@@ -2,6 +2,26 @@
 
 h5p-nodejs-library will be a nodejs-implementation of the [h5p-php-library](https://github.com/h5p/h5p-php-library). It is in a very early development state. Please feel free to contribute.
 
+## How to use
+
+This package provides a framework-agnostic function that returns a promise, which resolves to a string. The string is the equivalent to what the H5P-php-library would generate and can be integrated via iframe.
+
+```ts
+h5p(h5p_json: JSON, content_json: JSON, library_directory: string, url_prefix: string, options: Object): Promise<H5PPage>;
+```
+
+| Argument          | Type   |                                   Explaination                                   |
+| ----------------- | ------ | :------------------------------------------------------------------------------: |
+| h5p_json          | JSON   |               The h5p.json found in the root folder of a .h5p file               |
+| content_json      | JSON   |           The content.json found in the /content folder of a .h5p file           |
+| library_directory | string |      The path where the H5P-Libraries can be found and loaded via require.       |
+| url_prefix        | string | A prefix that is added in front of every js or css file that is loaded via http. |
+| options           | Object |         options.integration will be used as H5PIntegration on the page.          |
+
+See the [example integration for express](./examples/express.js) how to integrate it with exress.
+
+We will provide more examples in the future.
+
 ## Development
 
 ### Prerequisites
@@ -17,7 +37,7 @@ $ npm install
 $ npm start
 ```
 
-Open `http://localhost:8080` in your browser.
+Open `http://localhost:8080/course-presentation` in your browser to see the course-presentation example.
 
 ## Contributing
 
