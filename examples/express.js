@@ -4,7 +4,8 @@ const server = express();
 
 const h5p = require('../src/h5p'); // require('h5p-nodejs-library');
 
-server.use('/h5p', express.static(`${path.resolve('')}/h5p`));
+const h5p_route = '/h5p';
+server.use(h5p_route, express.static(`${path.resolve('')}/h5p`));
 
 server.get('/:content_id', (req, res) => {
     const h5p_json = require(`${path.resolve('')}/h5p/content/${
@@ -22,7 +23,7 @@ server.get('/:content_id', (req, res) => {
         h5p_json,
         content_json,
         library_directory,
-        '/h5p',
+        h5p_route,
         {
             integration: {
                 url: '/h5p'
