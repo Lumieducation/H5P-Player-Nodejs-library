@@ -122,23 +122,26 @@ function h5p(
 
         <script>window.H5PIntegration.contents = window.H5PIntegration.contents || {}; </script>
         <script>window.H5PIntegration.contents["cid-${content_id}"] = ${JSON.stringify(
-            {
-                library: get_main_library(
-                    h5p_json.mainLibrary,
-                    h5p_json.preloadedDependencies
-                ),
-                jsonContent: JSON.stringify(content_json),
-                fullScreen: false,
-                displayOptions: {
-                    frame: false,
-                    export: false,
-                    embed: false,
-                    copyright: true,
-                    icon: false
+            Object.assign(
+                {
+                    library: get_main_library(
+                        h5p_json.mainLibrary,
+                        h5p_json.preloadedDependencies
+                    ),
+                    jsonContent: JSON.stringify(content_json),
+                    fullScreen: false,
+                    displayOptions: {
+                        frame: false,
+                        export: false,
+                        embed: false,
+                        copyright: false,
+                        icon: false
+                    },
+                    styles: dependencies.css,
+                    scripts: dependencies.js
                 },
-                styles: dependencies.css,
-                scripts: dependencies.js
-            }
+                options.content
+            )
         )}
         </script>
 
