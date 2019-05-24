@@ -13,19 +13,21 @@ server.use('/h5p/core', express.static(`${__dirname}/core`));
 
 server.get('/', (req, res) => {
     res.append('Content-Type', 'text/html')
-    res.end(Object.keys(examples)
-        .map(key => `<a href="${key}">${key}</a>`)
+    res.end(examples
+        .map((example, i) => `
+            <a href="examples/${i}">${example.library}: ${example.name}</a> 
+            | <a href="${example.page}">original</a>`)
         .join('<br>'))
 })
 
-server.get('/:key', (req, res) => {
+server.get('/examples/:key', (req, res) => {
     let key = req.params.key;
     let name = path.basename(examples[key].h5p);
 
     let dir = `${__dirname}/contents/${name}`;
 
     server.use('/h5p/libraries', express.static(dir));
-    server.use(`/h5p/content/${key}`, express.static(`${dir}/content`));
+    server.use(`/h5p/content/${name}`, express.static(`${dir}/content`));
 
     let first = Promise.resolve();
     if (!fs.existsSync(dir)) {
@@ -35,7 +37,7 @@ server.get('/:key', (req, res) => {
     first
         .then(() =>
             h5p(
-                key,
+                name,
                 require(`${dir}/h5p.json`),
                 require(`${dir}/content/content.json`),
                 dir,
