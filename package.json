@@ -7,9 +7,10 @@
         "url": "https://github.com/Lumieducation/h5p-nodejs-library"
     },
     "scripts": {
-        "start": "node ./examples/express",
+        "postinstall": "examples/download-core.sh 1.22.0",
+        "start": "node ./examples/server",
         "clean": "rm -rf build && rm -rf dist",
-        "uninstall": "npm run clean && rm -rf node_modules",
+        "uninstall": "npm run clean && rm -rf node_modules && examples/uninstall.sh",
         "build": "",
         "lint": "./node_modules/.bin/eslint ./src",
         "test": "./node_modules/.bin/jest",
@@ -25,7 +26,7 @@
         "eslint-config-airbnb-base": "^13.1.0",
         "eslint-config-prettier": "^4.2.0",
         "eslint-plugin-import": "^2.17.2",
-        "express": "^4.16.4",
+        "express": "^4.17.0",
         "jest": "^24.7.1"
     },
     "main": "./src/h5p.js"
