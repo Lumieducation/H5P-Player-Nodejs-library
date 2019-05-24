@@ -6,7 +6,7 @@ const express = require('express');
 const server = express();
 
 const h5p = require('../src/h5p');
-const examples = require('./examples')
+const examples = require('./examples.json')
 
 server.use('/favicon.ico', express.static(`${__dirname}/favicon.ico`));
 server.use('/h5p/core', express.static(`${__dirname}/core`));
