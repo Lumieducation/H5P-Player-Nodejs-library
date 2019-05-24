@@ -1,5 +1,7 @@
 const resolve_dependencies = require('./resolve_dependencies');
+const get_main_library = require('./get_main_library');
 const default_integration = require('./default_integration');
+
 
 function h5p(
     content_id,
@@ -61,31 +63,26 @@ function h5p(
 
         <script>window.H5PIntegration.contents = window.H5PIntegration.contents || {}; </script>
         <script>window.H5PIntegration.contents["cid-${content_id}"] = ${JSON.stringify(
-            {
-                // library: h5p.get_mainLibrary(),
-                library: `${h5p_json.mainLibrary} ${
-                    h5p_json.preloadedDependencies.filter(
-                        dep => dep.machineName === h5p_json.mainLibrary
-                    )[0].majorVersion
-                }.${
-                    h5p_json.preloadedDependencies.filter(
-                        dep => dep.machineName === h5p_json.mainLibrary
-                    )[0].minorVersion
-                }`,
-                jsonContent: JSON.stringify(content_json),
-                fullScreen: false,
-                // "exportUrl": "/path/to/download.h5p",
-                // "embedCode": "<iframe src=\"https://mysite.com${url_prefix}/1234/embed\" width=\":w\" height=\":h\" frameborder=\"0\" allowfullscreen=\"allowfullscreen\"></iframe>",
-                displayOptions: {
-                    frame: false, // Show frame and buttons below H5P
-                    export: false, // Display download button
-                    embed: false, // Display embed button
-                    copyright: true, // Display copyright button
-                    icon: false // Display H5P icon
+            Object.assign(
+                {
+                    library: get_main_library(
+                        h5p_json.mainLibrary,
+                        h5p_json.preloadedDependencies
+                    ),
+                    jsonContent: JSON.stringify(content_json),
+                    fullScreen: false,
+                    displayOptions: {
+                        frame: false,
+                        export: false,
+                        embed: false,
+                        copyright: false,
+                        icon: false
+                    },
+                    styles: dependencies.css,
+                    scripts: dependencies.js
                 },
-                styles: dependencies.css,
-                scripts: dependencies.js
-            }
+                options.content
+            )
         )}
         </script>
 
