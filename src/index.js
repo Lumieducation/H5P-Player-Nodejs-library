@@ -2,13 +2,13 @@ const defaultRenderer = require('./renderers/default');
 const defaultTranslation = require('./translations/en.json');
 
 class H5P {
-    constructor(library_loader) {
+    constructor(library_loader, baseUrl = '/h5p') {
         this.library_loader = library_loader;
         this.renderer = defaultRenderer;
         this.translation = defaultTranslation;
 
-        this.baseUrl = '/h5p';
-        this.coreUrl = '/h5p/core';
+        this.baseUrl = baseUrl;
+        this.coreUrl = `${baseUrl}/core`;
     }
 
     render(content_id, content_object, h5p_object) {
@@ -26,6 +26,11 @@ class H5P {
 
     useRenderer(renderer) {
         this.renderer = renderer;
+        return this
+    }
+
+    setCoreUrl(coreUrl) {
+        this.coreUrl = coreUrl;
         return this
     }
 
