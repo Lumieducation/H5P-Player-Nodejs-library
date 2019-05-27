@@ -1,6 +1,6 @@
 {
     "name": "h5p-nodejs-library",
-    "version": "v0.1.0",
+    "version": "v0.2.0",
     "description": "The H5P-Nodejs-library is a port of the H5P-PHP-library for Nodejs.",
     "repository": {
         "type": "git",
