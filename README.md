@@ -11,12 +11,12 @@ This package provides a framework-agnostic function that returns a promise, whic
 
 ### 1. Provide H5P-Core files and libraries
 
-See the [example integration for express](./examples/express.js) how to integrate it with express.
+See the [example integration for express](./examples/server.js) how to integrate it with express.
 
 You have to provide the H5P-Core and library-files. To do so
 
 1. download the [H5P](https://github.com/h5p/h5p-php-library/archive/1.22.0.zip) folder and place it in your project.
-2. Add a route thats serves the H5P-Folder content. (See the [express-example](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/examples/express.js#L12))
+2. Add a route thats serves the H5P-Folder content. (See the [express-example](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/examples/server.js#L12))
 
 ### 2. Use the H5P-Nodejs-library
 
@@ -47,7 +47,7 @@ const H5P = new h5p(library_loader);
 
 ```
 
-or see the [express-example](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/examples/express.js#L37)
+or see the [express-example](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/examples/server.js#L37)
 
 #### 2.2 Provide the H5P- and Content-Object and use the renderer
 
@@ -86,7 +86,7 @@ $ npm start
 
 ### Usage 
 
-Open `http://localhost:8080` in your browser. You will see a list of examples. By clicking on an example you download the corresponding .h5p-file and render it in the browser. See [express-example](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/examples/express.js) for the implementation.
+Open `http://localhost:8080` in your browser. You will see a list of examples. By clicking on an example you download the corresponding .h5p-file and render it in the browser. See [express-example](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/examples/server.js) for the implementation.
 
 ## Contributing
 
