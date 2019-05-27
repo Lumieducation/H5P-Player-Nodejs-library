@@ -7,20 +7,6 @@ Please note that this project is in a very early and experimental stage. If you 
 
 This package provides a framework-agnostic function that returns a promise, which resolves to a string. The string is the equivalent to what the H5P-PHP-library would generate and can be integrated via iframe. You will also have to serve the H5P-Core-files.
 
-## Signature
-
-```ts
-h5p(h5p_json: JSON, content_json: JSON, library_directory: string, url_prefix: string, options: Object): Promise<H5PPage>;
-```
-
-| Argument          | Type   |                                   Explaination                                   |
-| ----------------- | ------ | :------------------------------------------------------------------------------: |
-| h5p_json          | JSON   |               The h5p.json found in the root folder of a .h5p file               |
-| content_json      | JSON   |           The content.json found in the /content folder of a .h5p file           |
-| library_directory | string |      The path where the H5P-Libraries can be found and loaded via require.       |
-| url_prefix        | string | A prefix that is added in front of every js or css file that is loaded via http. |
-| options           | Object |         options.integration will be used as H5PIntegration on the page.          |
-
 ## How to use
 
 ### 1. Provide H5P-Core files and libraries
@@ -29,15 +15,55 @@ See the [example integration for express](./examples/express.js) how to integrat
 
 You have to provide the H5P-Core and library-files. To do so
 
-1. download the [H5P](./h5p) folder and place it in your project.
-2. Add a route thats serves the H5P-Folder content. (See the [express-example](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/examples/express.js#L8)) - the route has to be added as the `url_prefix` argument to the h5p-function.
+1. download the [H5P](https://github.com/h5p/h5p-php-library/archive/1.22.0.zip) folder and place it in your project.
+2. Add a route thats serves the H5P-Folder content. (See the [express-example](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/examples/express.js#L12))
 
 ### 2. Use the H5P-Nodejs-library
 
-3. install the H5P-Nodejs-library via `npm install --save h5p-nodejs-library`
-4. Require the H5P-Nodejs-Library via `const h5p = require('h5p-nodejs-library')`.
-5. Use the h5p-function to build the H5P-Page. You will have to load the H5P.json and content.json from the .h5p file and provide these as arguments. For all arguments see the Signature.
-6. Serve the generated string as response.
+#### 2.1 Require the H5P-Nodejs-Library
+
+```ts
+const h5p = require('h5p-nodejs-library');
+```
+
+#### 2.1 Provide a library loader.
+
+A [H5P-Library](https://h5p.org/library-definition) is a folder that contains a `library.json` and the corresponding js/css files. H5P-Libraries can usualy be found in the root folder of a .h5p-file.
+The library loader is a function that loads the `library.json` of a specific H5P-library. The easiest way would be a function that uses nodejs-require for loading the library.json within a H5P-Library.
+The library-loader takes three arguments:
+
+1. machine_name: string - the folder name in which the library can be found
+2. major_version: number
+3. minor_version: number
+
+For example:
+
+```ts
+const library_loader = (machine_name: string, major_version: number, minor_version: number) => {
+    return require(`/the_path_to_your_libraries/${machine_name}-${major_version}.${minor_version}/library.json`
+};
+
+const H5P = new h5p(library_loader);
+
+```
+
+or see the [express-example](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/examples/express.js#L37)
+
+#### 2.2 Provide the H5P- and Content-Object and use the renderer
+
+You have to provide a [H5P-Object](https://h5p.org/documentation/developers/json-file-definitions) and a Content-Object.
+The H5P-Object can be found in the root folder of a .h5p-file.
+The Content-Object can be found the the /content folder of a .h5p-file.
+
+Use the `.render`-method of the H5P-Nodejs-Library, which generates a H5P Page that can be embedded via iframe.
+
+```ts
+const h5p_object = require(`test/h5p.json`);
+const content_object = require(`test/content/content.json`);
+H5P.render('test', content_object, h5p_object).then(h5p_page =>
+    send(h5p_page);
+);
+```
 
 ### Adapters
 
