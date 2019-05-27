@@ -7,7 +7,7 @@
         "url": "https://github.com/Lumieducation/h5p-nodejs-library"
     },
     "scripts": {
-        "postinstall": "examples/download-core.sh 1.22.0",
+        "postinstall": "examples/install.sh",
         "start": "node ./examples/server",
         "clean": "rm -rf build && rm -rf dist",
         "uninstall": "npm run clean && rm -rf node_modules && examples/uninstall.sh",
@@ -27,7 +27,9 @@
         "eslint-config-prettier": "^4.2.0",
         "eslint-plugin-import": "^2.17.2",
         "express": "^4.17.0",
-        "jest": "^24.7.1"
+        "jest": "^24.7.1",
+        "jsdom": "^15.1.0",
+        "request-promise": "^4.2.4"
     },
     "main": "./src/h5p.js"
 }
