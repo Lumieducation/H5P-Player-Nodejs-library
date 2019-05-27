@@ -31,5 +31,5 @@
         "jsdom": "^15.1.0",
         "request-promise": "^4.2.4"
     },
-    "main": "./src/h5p.js"
+    "main": "./src/index.js"
 }
