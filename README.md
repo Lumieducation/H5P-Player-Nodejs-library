@@ -69,7 +69,7 @@ H5P.render('test', content_object, h5p_object).then(h5p_page =>
 
 We will provide adapters for express and meteor in the future. If you would like to see another adapter, please make a issue.
 
-## Development
+## Development & Testing
 
 ### Prerequisites
 
@@ -84,7 +84,9 @@ $ npm install
 $ npm start
 ```
 
-Open `http://localhost:8080/course-presentation` in your browser to see the course-presentation example.
+### Usage 
+
+Open `http://localhost:8080` in your browser. You will see a list of examples. By clicking on an example you download the corresponding .h5p-file and render it in the browser. See [express-example](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/examples/express.js) for the implementation.
 
 ## Contributing
 
