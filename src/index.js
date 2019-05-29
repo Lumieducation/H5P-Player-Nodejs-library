@@ -86,7 +86,7 @@ class H5P {
             if (key in loaded) return;
             loaded[key] = true;
 
-            const lib = this.library_loader(
+            const lib = this.libraryLoader(
                 dependency.machineName,
                 dependency.majorVersion,
                 dependency.minorVersion

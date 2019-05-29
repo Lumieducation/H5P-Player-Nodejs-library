@@ -6,19 +6,23 @@ const express = require('express');
 const server = express();
 
 const H5P = require('../src');
-const examples = require('./examples.json')
+const examples = require('./examples.json');
 
 server.use('/favicon.ico', express.static(`${__dirname}/favicon.ico`));
 server.use('/h5p/core', express.static(`${__dirname}/core`));
 
 server.get('/', (req, res) => {
-    res.append('Content-Type', 'text/html')
-    res.end(examples
-        .map((example, i) => `
+    res.append('Content-Type', 'text/html');
+    res.end(
+        examples
+            .map(
+                (example, i) => `
             <a href="examples/${i}">${example.library}: ${example.name}</a> 
-            | <a href="${example.page}">original</a>`)
-        .join('<br>'))
-})
+            | <a href="${example.page}">original</a>`
+            )
+            .join('<br>')
+    );
+});
 
 server.get('/examples/:key', (req, res) => {
     let key = req.params.key;
@@ -31,21 +35,24 @@ server.get('/examples/:key', (req, res) => {
 
     let first = Promise.resolve();
     if (!fs.existsSync(dir)) {
-        first = exec(`examples/download-example.sh ${examples[key].h5p}`)
+        first = exec(`examples/download-example.sh ${examples[key].h5p}`);
     }
 
-    const library_loader = (lib, maj, min) => require(`./contents/${name}/${lib}-${maj}.${min}/library.json`)
+    const libraryLoader = (lib, maj, min) =>
+        require(`./contents/${name}/${lib}-${maj}.${min}/library.json`);
 
     first
         .then(() => {
-            const h5p_object = require(`${dir}/h5p.json`);
-            const content_object = require(`${dir}/content/content.json`);
-            return new H5P(library_loader).render(name, content_object, h5p_object)
+            const h5pObject = require(`${dir}/h5p.json`);
+            const contentObject = require(`${dir}/content/content.json`);
+            return new H5P(libraryLoader).render(
+                name,
+                contentObject,
+                h5pObject
+            );
         })
-        .then(h5p_page =>
-            res.end(h5p_page))
-        .catch(error =>
-            res.status(500).end(error.message));
+        .then(h5p_page => res.end(h5p_page))
+        .catch(error => res.status(500).end(error.message));
 });
 
 let port = process.env.PORT || 8080;
