@@ -7,7 +7,7 @@
         "url": "https://github.com/Lumieducation/h5p-nodejs-library"
     },
     "scripts": {
-        "postinstall": "examples/install.sh",
+        "prepare": "examples/install.sh",
         "start": "node ./examples/server",
         "clean": "rm -rf build && rm -rf dist",
         "uninstall": "npm run clean && rm -rf node_modules && examples/uninstall.sh",
