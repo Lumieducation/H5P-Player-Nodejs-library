@@ -4,7 +4,8 @@
         "es6": true,
         "node": true
     },
-    "extends": ["airbnb-base", "prettier"],
+    "plugins": ["jest"],
+    "extends": ["airbnb-base", "prettier", "plugin:jest/recommended"],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
