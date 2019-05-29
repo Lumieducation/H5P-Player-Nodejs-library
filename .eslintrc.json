@@ -14,7 +14,6 @@
         "sourceType": "module"
     },
     "rules": {
-        "camelcase": 0,
         "global-require": "off",
         "import/no-dynamic-require": "off"
     }
