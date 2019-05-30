@@ -12,10 +12,12 @@
         "clean": "rm -rf build && rm -rf dist",
         "uninstall": "npm run clean && rm -rf node_modules && examples/uninstall.sh",
         "build": "",
-        "ci": "npm run lint && npm run test",
+        "ci": "npm run lint && npm run format:check && npm run test",
         "lint": "eslint ./src ./test",
         "test": "jest",
-        "test:watch": "jest --watch"
+        "test:watch": "jest --watch",
+        "format:check": "prettier --check \"{src,test}/**/*.js\"",
+        "format": "prettier --write \"{src,test}/**/*.js\""
     },
     "author": "Jan Philip Schellenberg",
     "dependencies": {},
@@ -31,6 +33,7 @@
         "express": "^4.17.0",
         "jest": "^24.7.1",
         "jsdom": "^15.1.0",
+        "prettier": "^1.17.1",
         "request-promise": "^4.2.4"
     },
     "main": "./src/index.js"
