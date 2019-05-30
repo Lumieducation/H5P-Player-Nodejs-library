@@ -16,6 +16,9 @@
     },
     "rules": {
         "global-require": "off",
-        "import/no-dynamic-require": "off"
+        "import/no-dynamic-require": "off",
+        "no-underscore-dangle": "off",
+        "no-param-reassign": "off",
+        "class-methods-use-this": "off"
     }
 }
