@@ -1,16 +1,15 @@
 const H5P = require('../src');
 
 describe('Rendering the HTML page', () => {
-
     it('uses default renderer and integration values', () => {
-        const content_id = 'foo';
-        const content_object = {
+        const contentId = 'foo';
+        const contentObject = {
             my: 'content'
         };
-        const h5p_object = {};
+        const h5pObject = {};
 
         return new H5P()
-            .render(content_id, content_object, h5p_object)
+            .render(contentId, contentObject, h5pObject)
             .then(html => {
                 expect(html).toBe(
                     `<!doctype html>
@@ -84,14 +83,15 @@ describe('Rendering the HTML page', () => {
 <body>
     <div class="h5p-content" data-content-id="foo"></div>
 </body>
-</html>`)
-            })
-    })
+</html>`
+                );
+            });
+    });
 
     it('resolves the main library', () => {
-        const content_id = 'foo';
-        const content_object = {};
-        const h5p_object = {
+        const contentId = 'foo';
+        const contentObject = {};
+        const h5pObject = {
             mainLibrary: 'Foo',
             preloadedDependencies: [
                 {
@@ -107,9 +107,11 @@ describe('Rendering the HTML page', () => {
 
         return new H5P(() => ({}))
             .useRenderer(model => model)
-            .render(content_id, content_object, h5p_object)
+            .render(contentId, contentObject, h5pObject)
             .then(model => {
-                expect(model.integration.contents['cid-foo'].library).toBe('Foo 4.2')
-            })
-    })
-})
+                expect(model.integration.contents['cid-foo'].library).toBe(
+                    'Foo 4.2'
+                );
+            });
+    });
+});

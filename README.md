@@ -39,11 +39,11 @@ The library-loader takes three arguments:
 For example:
 
 ```ts
-const library_loader = (machine_name: string, major_version: number, minor_version: number) => {
+const libraryLoader = (machine_name: string, major_version: number, minor_version: number) => {
     return require(`/the_path_to_your_libraries/${machine_name}-${major_version}.${minor_version}/library.json`
 };
 
-const H5P = new h5p(library_loader);
+const H5P = new h5p(libraryLoader);
 
 ```
 
@@ -58,9 +58,9 @@ The Content-Object can be found the the /content folder of a .h5p-file.
 Use the `.render`-method of the H5P-Nodejs-Library, which generates a H5P Page that can be embedded via iframe.
 
 ```ts
-const h5p_object = require(`test/h5p.json`);
-const content_object = require(`test/content/content.json`);
-H5P.render('test', content_object, h5p_object).then(h5p_page =>
+const h5pObject = require(`test/h5p.json`);
+const contentObject = require(`test/content/content.json`);
+H5P.render('test', contentObject, h5pObject).then(h5p_page =>
     send(h5p_page);
 );
 ```
@@ -84,7 +84,7 @@ $ npm install
 $ npm start
 ```
 
-### Usage 
+### Usage
 
 Open `http://localhost:8080` in your browser. You will see a list of examples. By clicking on an example you download the corresponding .h5p-file and render it in the browser. See [express-example](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/examples/server.js) for the implementation.
 

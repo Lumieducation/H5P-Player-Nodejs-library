@@ -3,16 +3,18 @@ module.exports = model => `<!doctype html>
 <head>
     <meta charset="utf-8">
     
-    ${model.styles.map(style =>
-        `<link rel="stylesheet" href="${style}"/>`).join('\n    ')}
-    ${model.scripts.map(script =>
-        `<script src="${script}"></script>`).join('\n    ')}
+    ${model.styles
+        .map(style => `<link rel="stylesheet" href="${style}"/>`)
+        .join('\n    ')}
+    ${model.scripts
+        .map(script => `<script src="${script}"></script>`)
+        .join('\n    ')}
 
     <script>
         H5PIntegration = ${JSON.stringify(model.integration, null, 2)};
     </script>
 </head>
 <body>
-    <div class="h5p-content" data-content-id="${model.content_id}"></div>
+    <div class="h5p-content" data-content-id="${model.contentId}"></div>
 </body>
 </html>`;
