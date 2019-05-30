@@ -79,9 +79,11 @@ class H5P {
 
     _loadAssets(dependencies, assets, loaded = {}) {
         dependencies.forEach(dependency => {
-            const key = `${dependency.machineName}-${dependency.majorVersion}.${
-                dependency.minorVersion
-            }`;
+            const name = dependency.machineName;
+            const majVer = dependency.majorVersion;
+            const minVer = dependency.minorVersion;
+
+            const key = `${name}-${majVer}.${minVer}`;
 
             if (key in loaded) return;
             loaded[key] = true;
@@ -111,9 +113,11 @@ class H5P {
 
         if (!library) return undefined;
 
-        return `${library.machineName} ${library.majorVersion}.${
-            library.minorVersion
-        }`;
+        const name = library.machineName;
+        const majVer = library.majorVersion;
+        const minVer = library.minorVersion;
+
+        return `${name} ${majVer}.${minVer}`;
     }
 }
 
