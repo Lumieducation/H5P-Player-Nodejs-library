@@ -19,9 +19,10 @@ class H5P {
             integration: this._integration(contentId, contentObject, h5pObject)
         };
 
-        this._loadAssets(h5pObject.preloadedDependencies || [], model);
-
-        return Promise.resolve(this.renderer(model));
+        return this._loadAssets(
+            h5pObject.preloadedDependencies || [],
+            model
+        ).then(() => this.renderer(model));
     }
 
     useRenderer(renderer) {
@@ -78,32 +79,34 @@ class H5P {
     }
 
     _loadAssets(dependencies, assets, loaded = {}) {
-        dependencies.forEach(dependency => {
-            const name = dependency.machineName;
-            const majVer = dependency.majorVersion;
-            const minVer = dependency.minorVersion;
+        return Promise.all(
+            dependencies.map(dependency => {
+                const name = dependency.machineName;
+                const majVer = dependency.majorVersion;
+                const minVer = dependency.minorVersion;
 
-            const key = `${name}-${majVer}.${minVer}`;
+                const key = `${name}-${majVer}.${minVer}`;
 
-            if (key in loaded) return;
-            loaded[key] = true;
+                if (key in loaded) return Promise.resolve();
+                loaded[key] = true;
 
-            const lib = this.libraryLoader(
-                dependency.machineName,
-                dependency.majorVersion,
-                dependency.minorVersion
-            );
-
-            this._loadAssets(lib.preloadedDependencies || [], assets, loaded);
-
-            const path = `${this.baseUrl}/libraries/${key}`;
-            (lib.preloadedCss || []).forEach(asset =>
-                assets.styles.push(`${path}/${asset.path}`)
-            );
-            (lib.preloadedJs || []).forEach(script =>
-                assets.scripts.push(`${path}/${script.path}`)
-            );
-        });
+                return this.libraryLoader(name, majVer, minVer).then(lib =>
+                    this._loadAssets(
+                        lib.preloadedDependencies || [],
+                        assets,
+                        loaded
+                    ).then(() => {
+                        const path = `${this.baseUrl}/libraries/${key}`;
+                        (lib.preloadedCss || []).forEach(asset =>
+                            assets.styles.push(`${path}/${asset.path}`)
+                        );
+                        (lib.preloadedJs || []).forEach(script =>
+                            assets.scripts.push(`${path}/${script.path}`)
+                        );
+                    })
+                );
+            })
+        );
     }
 
     _mainLibraryString(h5pObject) {
