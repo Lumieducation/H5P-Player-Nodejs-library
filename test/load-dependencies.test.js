@@ -20,16 +20,21 @@ describe('Loading dependencies', () => {
             ]
         };
         const libraryLoader = (name, maj, min) =>
-            ({
-                Foo42: {
-                    preloadedJs: [{ path: 'foo1.js' }, { path: 'foo2.js' }],
-                    preloadedCss: [{ path: 'foo1.css' }, { path: 'foo2.css' }]
-                },
-                Bar21: {
-                    preloadedJs: [{ path: 'bar.js' }],
-                    preloadedCss: [{ path: 'bar.css' }]
-                }
-            }[name + maj + min]);
+            Promise.resolve(
+                {
+                    Foo42: {
+                        preloadedJs: [{ path: 'foo1.js' }, { path: 'foo2.js' }],
+                        preloadedCss: [
+                            { path: 'foo1.css' },
+                            { path: 'foo2.css' }
+                        ]
+                    },
+                    Bar21: {
+                        preloadedJs: [{ path: 'bar.js' }],
+                        preloadedCss: [{ path: 'bar.css' }]
+                    }
+                }[name + maj + min]
+            );
 
         return new H5P(libraryLoader)
             .useRenderer(model => model)
@@ -62,34 +67,36 @@ describe('Loading dependencies', () => {
             ]
         };
         const libraryLoader = (name, maj, min) =>
-            ({
-                Foo42: {
-                    preloadedJs: [{ path: 'foo.js' }],
-                    preloadedCss: [{ path: 'foo.css' }],
-                    preloadedDependencies: [
-                        {
-                            machineName: 'Bar',
-                            majorVersion: 2,
-                            minorVersion: 1
-                        }
-                    ]
-                },
-                Bar21: {
-                    preloadedJs: [{ path: 'bar.js' }],
-                    preloadedCss: [{ path: 'bar.css' }],
-                    preloadedDependencies: [
-                        {
-                            machineName: 'Baz',
-                            majorVersion: 3,
-                            minorVersion: 3
-                        }
-                    ]
-                },
-                Baz33: {
-                    preloadedJs: [{ path: 'baz.js' }],
-                    preloadedCss: [{ path: 'baz.css' }]
-                }
-            }[name + maj + min]);
+            Promise.resolve(
+                {
+                    Foo42: {
+                        preloadedJs: [{ path: 'foo.js' }],
+                        preloadedCss: [{ path: 'foo.css' }],
+                        preloadedDependencies: [
+                            {
+                                machineName: 'Bar',
+                                majorVersion: 2,
+                                minorVersion: 1
+                            }
+                        ]
+                    },
+                    Bar21: {
+                        preloadedJs: [{ path: 'bar.js' }],
+                        preloadedCss: [{ path: 'bar.css' }],
+                        preloadedDependencies: [
+                            {
+                                machineName: 'Baz',
+                                majorVersion: 3,
+                                minorVersion: 3
+                            }
+                        ]
+                    },
+                    Baz33: {
+                        preloadedJs: [{ path: 'baz.js' }],
+                        preloadedCss: [{ path: 'baz.css' }]
+                    }
+                }[name + maj + min]
+            );
 
         return new H5P(libraryLoader)
             .useRenderer(model => model)
@@ -122,39 +129,41 @@ describe('Loading dependencies', () => {
             ]
         };
         const libraryLoader = (name, maj, min) =>
-            ({
-                Foo42: {
-                    preloadedJs: [{ path: 'foo.js' }],
-                    preloadedCss: [{ path: 'foo.css' }],
-                    preloadedDependencies: [
-                        {
-                            machineName: 'Bar',
-                            majorVersion: 2,
-                            minorVersion: 1
-                        },
-                        {
-                            machineName: 'Baz',
-                            majorVersion: 3,
-                            minorVersion: 3
-                        }
-                    ]
-                },
-                Bar21: {
-                    preloadedJs: [{ path: 'bar.js' }],
-                    preloadedCss: [{ path: 'bar.css' }],
-                    preloadedDependencies: [
-                        {
-                            machineName: 'Baz',
-                            majorVersion: 3,
-                            minorVersion: 3
-                        }
-                    ]
-                },
-                Baz33: {
-                    preloadedJs: [{ path: 'baz.js' }],
-                    preloadedCss: [{ path: 'baz.css' }]
-                }
-            }[name + maj + min]);
+            Promise.resolve(
+                {
+                    Foo42: {
+                        preloadedJs: [{ path: 'foo.js' }],
+                        preloadedCss: [{ path: 'foo.css' }],
+                        preloadedDependencies: [
+                            {
+                                machineName: 'Bar',
+                                majorVersion: 2,
+                                minorVersion: 1
+                            },
+                            {
+                                machineName: 'Baz',
+                                majorVersion: 3,
+                                minorVersion: 3
+                            }
+                        ]
+                    },
+                    Bar21: {
+                        preloadedJs: [{ path: 'bar.js' }],
+                        preloadedCss: [{ path: 'bar.css' }],
+                        preloadedDependencies: [
+                            {
+                                machineName: 'Baz',
+                                majorVersion: 3,
+                                minorVersion: 3
+                            }
+                        ]
+                    },
+                    Baz33: {
+                        preloadedJs: [{ path: 'baz.js' }],
+                        preloadedCss: [{ path: 'baz.css' }]
+                    }
+                }[name + maj + min]
+            );
 
         return new H5P(libraryLoader)
             .useRenderer(model => model)

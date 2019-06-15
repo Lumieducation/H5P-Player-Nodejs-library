@@ -105,7 +105,7 @@ describe('Rendering the HTML page', () => {
             ]
         };
 
-        return new H5P(() => ({}))
+        return new H5P(() => Promise.resolve({}))
             .useRenderer(model => model)
             .render(contentId, contentObject, h5pObject)
             .then(model => {
