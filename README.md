@@ -40,7 +40,7 @@ For example:
 
 ```ts
 const libraryLoader = (machine_name: string, major_version: number, minor_version: number) => {
-    return require(`/the_path_to_your_libraries/${machine_name}-${major_version}.${minor_version}/library.json`
+    return new Promise(resolve => { resolve(require(`/the_path_to_your_libraries/${machine_name}-${major_version}.${minor_version}/library.json`); }))
 };
 
 const H5P = new h5p(libraryLoader);
