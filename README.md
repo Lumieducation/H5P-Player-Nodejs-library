@@ -43,7 +43,14 @@ const libraryLoader = (machine_name: string, major_version: number, minor_versio
     return new Promise(resolve => { resolve(require(`/the_path_to_your_libraries/${machine_name}-${major_version}.${minor_version}/library.json`); }))
 };
 
-const H5P = new h5p(libraryLoader);
+const urls = {
+    baseUrl: '/h5p', // your base URL - used in the integration object
+    libraryUrl: `/h5p/libraries`, // URL where your libraries can be found
+    stylesUrl: `/h5p/core/styles`, // URL where the core styles can be found
+    scriptUrl: `/h5p/core/js` // URL where the core scripts can be found
+};
+
+const H5P = new h5p(libraryLoader, urls);
 
 ```
 
