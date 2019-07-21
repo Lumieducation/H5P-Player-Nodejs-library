@@ -181,4 +181,89 @@ describe('Loading dependencies', () => {
                 ]);
             });
     });
+
+    it('configures urls', () => {
+        const contentId = 'foo';
+        const contentObject = {};
+        const h5pObject = {
+            mainLibrary: 'Foo',
+            preloadedDependencies: [
+                {
+                    machineName: 'Foo',
+                    majorVersion: 4,
+                    minorVersion: 2
+                }
+            ]
+        };
+        const libraryLoader = (name, maj, min) =>
+            Promise.resolve(
+                {
+                    Foo42: {
+                        preloadedJs: [{ path: 'foo.js' }],
+                        preloadedCss: [{ path: 'foo.css' }],
+                        preloadedDependencies: [
+                            {
+                                machineName: 'Bar',
+                                majorVersion: 2,
+                                minorVersion: 1
+                            },
+                            {
+                                machineName: 'Baz',
+                                majorVersion: 3,
+                                minorVersion: 3
+                            }
+                        ]
+                    },
+                    Bar21: {
+                        preloadedJs: [{ path: 'bar.js' }],
+                        preloadedCss: [{ path: 'bar.css' }],
+                        preloadedDependencies: [
+                            {
+                                machineName: 'Baz',
+                                majorVersion: 3,
+                                minorVersion: 3
+                            }
+                        ]
+                    },
+                    Baz33: {
+                        preloadedJs: [{ path: 'baz.js' }],
+                        preloadedCss: [{ path: 'baz.css' }]
+                    }
+                }[name + maj + min]
+            );
+
+        const h5p = new H5P(libraryLoader, {
+            baseUrl: '/baseUrl',
+            libraryUrl: `/libraryUrl`,
+            stylesUrl: `/stylesUrl`,
+            scriptUrl: `/scriptUrl`
+        });
+
+        return h5p
+            .useRenderer(model => model)
+            .render(contentId, contentObject, h5pObject)
+            .then(model => {
+                expect(model.styles.slice(1)).toEqual([
+                    '/libraryUrl/Baz-3.3/baz.css',
+                    '/libraryUrl/Bar-2.1/bar.css',
+                    '/libraryUrl/Foo-4.2/foo.css'
+                ]);
+
+                expect(h5p._coreScripts()).toEqual([
+                    '/scriptUrl/jquery.js',
+                    '/scriptUrl/h5p.js',
+                    '/scriptUrl/h5p-event-dispatcher.js',
+                    '/scriptUrl/h5p-x-api-event.js',
+                    '/scriptUrl/h5p-x-api.js',
+                    '/scriptUrl/h5p-content-type.js',
+                    '/scriptUrl/h5p-action-bar.js'
+                ]);
+
+                expect(h5p._coreStyles()).toEqual(['/stylesUrl/h5p.css']);
+
+                expect(h5p._integration('contentId', {}, {}).url).toBe(
+                    '/baseUrl'
+                );
+            });
+    });
 });
