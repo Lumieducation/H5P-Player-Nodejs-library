@@ -2,13 +2,25 @@ const defaultRenderer = require('./renderers/default');
 const defaultTranslation = require('./translations/en.json');
 
 class H5P {
-    constructor(libraryLoader, baseUrl = '/h5p') {
+    constructor(libraryLoader, urls) {
         this.libraryLoader = libraryLoader;
         this.renderer = defaultRenderer;
         this.translation = defaultTranslation;
 
-        this.baseUrl = baseUrl;
-        this.coreUrl = `${baseUrl}/core`;
+        this.urls = Object.assign(
+            {
+                baseUrl: '/h5p',
+                libraryUrl: `/h5p/libraries`,
+                stylesUrl: `/h5p/core/styles`,
+                scriptUrl: `/h5p/core/js`
+            },
+            urls
+        );
+
+        this.baseUrl = this.urls.baseUrl;
+        this.libraryUrl = this.urls.libraryUrl;
+        this.stylesUrl = this.urls.stylesUrl;
+        this.scriptUrl = this.urls.scriptUrl;
     }
 
     render(contentId, contentObject, h5pObject) {
@@ -27,11 +39,6 @@ class H5P {
 
     useRenderer(renderer) {
         this.renderer = renderer;
-        return this;
-    }
-
-    setCoreUrl(coreUrl) {
-        this.coreUrl = coreUrl;
         return this;
     }
 
@@ -63,7 +70,7 @@ class H5P {
     }
 
     _coreStyles() {
-        return ['h5p.css'].map(file => `${this.coreUrl}/styles/${file}`);
+        return ['h5p.css'].map(file => `${this.stylesUrl}/${file}`);
     }
 
     _coreScripts() {
@@ -75,7 +82,7 @@ class H5P {
             'h5p-x-api.js',
             'h5p-content-type.js',
             'h5p-action-bar.js'
-        ].map(file => `${this.coreUrl}/js/${file}`);
+        ].map(file => `${this.scriptUrl}/${file}`);
     }
 
     _loadAssets(dependencies, assets, loaded = {}) {
@@ -96,7 +103,7 @@ class H5P {
                         assets,
                         loaded
                     ).then(() => {
-                        const path = `${this.baseUrl}/libraries/${key}`;
+                        const path = `${this.libraryUrl}/${key}`;
                         (lib.preloadedCss || []).forEach(asset =>
                             assets.styles.push(`${path}/${asset.path}`)
                         );
