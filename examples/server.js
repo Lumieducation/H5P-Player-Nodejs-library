@@ -39,7 +39,11 @@ server.get('/examples/:key', (req, res) => {
     }
 
     const libraryLoader = (lib, maj, min) =>
-        require(`./contents/${name}/${lib}-${maj}.${min}/library.json`);
+        new Promise(resolve => {
+            resolve(
+                require(`./contents/${name}/${lib}-${maj}.${min}/library.json`)
+            );
+        });
 
     first
         .then(() => {
