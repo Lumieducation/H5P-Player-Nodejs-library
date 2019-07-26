@@ -1,11 +1,11 @@
 const puppeteer = require('puppeteer');
-const examples = require('../examples/examples.json');
 const path = require('path');
 const PromiseQueue = require('promise-queue');
 const express = require('express');
-const server = express();
+const examples = require('../examples/examples.json');
 const H5P = require('../src');
 
+const server = express();
 const queue = new PromiseQueue(3, Infinity);
 
 server.use('/h5p/core', express.static(`${path.resolve('')}/h5p/core`));
