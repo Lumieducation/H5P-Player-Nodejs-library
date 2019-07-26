@@ -12,7 +12,7 @@
         "clean": "rm -rf build && rm -rf dist",
         "uninstall": "npm run clean && rm -rf node_modules && examples/uninstall.sh",
         "build": "",
-        "ci": "npm run lint && npm run format:check && npm run test",
+        "ci": "node test/install.js && npm run lint && npm run format:check && npm run test",
         "lint": "eslint ./src ./test",
         "test": "jest",
         "test:watch": "jest --watch",
