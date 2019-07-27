@@ -8,7 +8,7 @@ const H5P = require('../src');
 const server = express();
 const queue = new PromiseQueue(3, Infinity);
 
-server.use('/h5p/core', express.static(`${path.resolve('')}/h5p/core`));
+server.use('/h5p/core', express.static(`${path.resolve('')}/examples/core`));
 server.get('/examples/:key', (req, res) => {
     const { key } = req.params;
     const name = path.basename(examples[key].h5p);
@@ -18,13 +18,9 @@ server.get('/examples/:key', (req, res) => {
     server.use(`/h5p/content/${name}`, express.static(`${dir}/content`));
 
     const libraryLoader = (lib, maj, min) =>
-        new Promise(resolve => {
-            resolve(
-                require(`${path.resolve(
-                    ''
-                )}/examples/contents/${name}/${lib}-${maj}.${min}/library.json`)
-            );
-        });
+        require(`${path.resolve(
+            ''
+        )}/examples/contents/${name}/${lib}-${maj}.${min}/library.json`);
 
     const h5pObject = require(`${dir}/h5p.json`);
     const contentObject = require(`${dir}/content/content.json`);
@@ -49,7 +45,10 @@ server.listen(8080, () => {
                                 });
 
                                 page.goto(
-                                    `http://localhost:8080/examples/${index}`
+                                    `http://localhost:8080/examples/${index}`,
+                                    {
+                                        waitUntil: 'networkidle0'
+                                    }
                                 ).then(() => {
                                     page.close();
                                     resolve();
