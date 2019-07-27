@@ -69,7 +69,9 @@ class H5P {
     }
 
     _coreStyles() {
-        return ['h5p.css'].map(file => `${this.stylesUrl}/${file}`);
+        return ['h5p.css', 'h5p-confirmation-dialog.css'].map(
+            file => `${this.stylesUrl}/${file}`
+        );
     }
 
     _coreScripts() {
@@ -80,6 +82,7 @@ class H5P {
             'h5p-x-api-event.js',
             'h5p-x-api.js',
             'h5p-content-type.js',
+            'h5p-confirmation-dialog.js',
             'h5p-action-bar.js'
         ].map(file => `${this.scriptUrl}/${file}`);
     }
