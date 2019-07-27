@@ -51,6 +51,11 @@ server.listen(8080, () => {
                                     }
                                 ).then(() => {
                                     page.close();
+                                    console.log(
+                                        `${example.library}(${
+                                            example.page
+                                        }): OK`
+                                    );
                                     resolve();
                                 });
                             });
