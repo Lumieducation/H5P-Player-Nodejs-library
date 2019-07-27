@@ -12,7 +12,7 @@
         "clean": "rm -rf build && rm -rf dist",
         "uninstall": "npm run clean && rm -rf node_modules && examples/uninstall.sh",
         "build": "",
-        "ci": "node test/install.js && npm run lint && npm run format:check && npm run test",
+        "ci": "npm run lint && npm run format:check && npm run test && node test/download_content.ci.js && node test/content.ci.js",
         "lint": "eslint ./src ./test",
         "test": "jest",
         "test:watch": "jest --watch",
@@ -34,6 +34,8 @@
         "jest": "^24.7.1",
         "jsdom": "^15.1.0",
         "prettier": "^1.17.1",
+        "promise-queue": "^2.2.5",
+        "puppeteer": "^1.19.0",
         "request-promise": "^4.2.4"
     },
     "main": "./src/index.js"

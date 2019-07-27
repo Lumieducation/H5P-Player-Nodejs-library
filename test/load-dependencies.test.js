@@ -35,12 +35,12 @@ describe('Loading dependencies', () => {
             .useRenderer(model => model)
             .render(contentId, contentObject, h5pObject)
             .then(model => {
-                expect(model.styles.slice(1)).toEqual([
+                expect(model.styles.slice(2)).toEqual([
                     '/h5p/libraries/Foo-4.2/foo1.css',
                     '/h5p/libraries/Foo-4.2/foo2.css',
                     '/h5p/libraries/Bar-2.1/bar.css'
                 ]);
-                expect(model.scripts.slice(7)).toEqual([
+                expect(model.scripts.slice(8)).toEqual([
                     '/h5p/libraries/Foo-4.2/foo1.js',
                     '/h5p/libraries/Foo-4.2/foo2.js',
                     '/h5p/libraries/Bar-2.1/bar.js'
@@ -95,12 +95,12 @@ describe('Loading dependencies', () => {
             .useRenderer(model => model)
             .render(contentId, contentObject, h5pObject)
             .then(model => {
-                expect(model.styles.slice(1)).toEqual([
+                expect(model.styles.slice(2)).toEqual([
                     '/h5p/libraries/Baz-3.3/baz.css',
                     '/h5p/libraries/Bar-2.1/bar.css',
                     '/h5p/libraries/Foo-4.2/foo.css'
                 ]);
-                expect(model.scripts.slice(7)).toEqual([
+                expect(model.scripts.slice(8)).toEqual([
                     '/h5p/libraries/Baz-3.3/baz.js',
                     '/h5p/libraries/Bar-2.1/bar.js',
                     '/h5p/libraries/Foo-4.2/foo.js'
@@ -160,12 +160,12 @@ describe('Loading dependencies', () => {
             .useRenderer(model => model)
             .render(contentId, contentObject, h5pObject)
             .then(model => {
-                expect(model.styles.slice(1)).toEqual([
+                expect(model.styles.slice(2)).toEqual([
                     '/h5p/libraries/Baz-3.3/baz.css',
                     '/h5p/libraries/Bar-2.1/bar.css',
                     '/h5p/libraries/Foo-4.2/foo.css'
                 ]);
-                expect(model.scripts.slice(7)).toEqual([
+                expect(model.scripts.slice(8)).toEqual([
                     '/h5p/libraries/Baz-3.3/baz.js',
                     '/h5p/libraries/Bar-2.1/bar.js',
                     '/h5p/libraries/Foo-4.2/foo.js'
@@ -233,7 +233,7 @@ describe('Loading dependencies', () => {
             .useRenderer(model => model)
             .render(contentId, contentObject, h5pObject)
             .then(model => {
-                expect(model.styles.slice(1)).toEqual([
+                expect(model.styles.slice(2)).toEqual([
                     '/libraryUrl/Baz-3.3/baz.css',
                     '/libraryUrl/Bar-2.1/bar.css',
                     '/libraryUrl/Foo-4.2/foo.css'
@@ -246,10 +246,14 @@ describe('Loading dependencies', () => {
                     '/scriptUrl/h5p-x-api-event.js',
                     '/scriptUrl/h5p-x-api.js',
                     '/scriptUrl/h5p-content-type.js',
+                    '/scriptUrl/h5p-confirmation-dialog.js',
                     '/scriptUrl/h5p-action-bar.js'
                 ]);
 
-                expect(h5p._coreStyles()).toEqual(['/stylesUrl/h5p.css']);
+                expect(h5p._coreStyles()).toEqual([
+                    '/stylesUrl/h5p.css',
+                    '/stylesUrl/h5p-confirmation-dialog.css'
+                ]);
 
                 expect(h5p._integration('contentId', {}, {}).url).toBe(
                     '/baseUrl'

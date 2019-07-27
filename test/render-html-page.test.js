@@ -18,12 +18,14 @@ describe('Rendering the HTML page', () => {
     <meta charset="utf-8">
     
     <link rel="stylesheet" href="/h5p/core/styles/h5p.css"/>
+    <link rel="stylesheet" href="/h5p/core/styles/h5p-confirmation-dialog.css"/>
     <script src="/h5p/core/js/jquery.js"></script>
     <script src="/h5p/core/js/h5p.js"></script>
     <script src="/h5p/core/js/h5p-event-dispatcher.js"></script>
     <script src="/h5p/core/js/h5p-x-api-event.js"></script>
     <script src="/h5p/core/js/h5p-x-api.js"></script>
     <script src="/h5p/core/js/h5p-content-type.js"></script>
+    <script src="/h5p/core/js/h5p-confirmation-dialog.js"></script>
     <script src="/h5p/core/js/h5p-action-bar.js"></script>
 
     <script>
