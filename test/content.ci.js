@@ -40,7 +40,13 @@ server.listen(8080, () => {
                         new Promise((resolve, reject) => {
                             browser.newPage().then(page => {
                                 page.on('pageerror', msg => {
-                                    console.log('ERROR', example, msg);
+                                    console.log(
+                                        `${example.library} (${
+                                            example.page
+                                        }): ERROR`,
+                                        example,
+                                        msg
+                                    );
                                     reject(new Error(JSON.stringify(example)));
                                 });
 
@@ -50,13 +56,15 @@ server.listen(8080, () => {
                                         waitUntil: 'networkidle0'
                                     }
                                 ).then(() => {
-                                    page.close();
-                                    console.log(
-                                        `${example.library}(${
-                                            example.page
-                                        }): OK`
-                                    );
-                                    resolve();
+                                    setTimeout(() => {
+                                        page.close();
+                                        console.log(
+                                            `${example.library}(${
+                                                example.page
+                                            }): OK`
+                                        );
+                                        resolve();
+                                    }, 1000);
                                 });
                             });
                         })
