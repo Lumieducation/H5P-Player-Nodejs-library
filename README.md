@@ -23,7 +23,7 @@ You have to provide the H5P-Core and library-files. To do so
 #### 2.1 Require the H5P-Nodejs-Library
 
 ```ts
-const h5p = require('h5p-nodejs-library');
+const H5P = require('h5p-nodejs-library');
 ```
 
 #### 2.1 Provide a library loader.
@@ -32,15 +32,19 @@ A [H5P-Library](https://h5p.org/library-definition) is a folder that contains a 
 The library loader is a function that loads the `library.json` of a specific H5P-library. The easiest way would be a function that uses nodejs-require for loading the library.json within a H5P-Library.
 The library-loader takes three arguments:
 
-1. machine_name: string - the folder name in which the library can be found
-2. major_version: number
-3. minor_version: number
+1. machineName: string - the folder name in which the library can be found
+2. majorVersion: number
+3. minorVersion: number
 
 For example:
 
 ```ts
-const libraryLoader = (machine_name: string, major_version: number, minor_version: number) => {
-    return new Promise(resolve => { resolve(require(`/the_path_to_your_libraries/${machine_name}-${major_version}.${minor_version}/library.json`); }))
+const libraryLoader = (
+    machineName: string,
+    majorVersion: number,
+    minorVersion: number
+) => {
+    return require(`/the_path_to_your_libraries/${machineName}-${majorVersion}.${minorVersion}/library.json`);
 };
 
 const urls = {
@@ -50,8 +54,7 @@ const urls = {
     scriptUrl: `/h5p/core/js` // URL where the core scripts can be found
 };
 
-const H5P = new h5p(libraryLoader, urls);
-
+const h5p = new H5P(libraryLoader, urls);
 ```
 
 or see the [express-example](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/examples/server.js#L37)
@@ -67,8 +70,8 @@ Use the `.render`-method of the H5P-Nodejs-Library, which generates a H5P Page t
 ```ts
 const h5pObject = require(`test/h5p.json`);
 const contentObject = require(`test/content/content.json`);
-H5P.render('test', contentObject, h5pObject).then(h5p_page =>
-    send(h5p_page);
+H5P.render('test', contentObject, h5pObject).then(h5pPage =>
+    send(h5pPage);
 );
 ```
 
@@ -94,6 +97,31 @@ $ npm start
 ### Usage
 
 Open `http://localhost:8080` in your browser. You will see a list of examples. By clicking on an example you download the corresponding .h5p-file and render it in the browser. See [express-example](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/examples/server.js) for the implementation.
+
+### Tests
+
+#### Unit Tests
+
+To run the unit tests with `jest` run
+
+```
+npm run test
+```
+
+#### Content Tests
+
+To run the integration test, simply use
+
+```
+npm run test:content
+```
+
+This command will do the following:
+
+1. download all H5P-Examples specified in the [examples/examples.json](examples/examples.json).
+2. start a local webserver on port 8080
+3. start a chromium instance via [puppeteer](https://github.com/GoogleChrome/puppeteer)
+4. checks every example if it throws errors when openend in a browser
 
 ## Contributing
 
