@@ -70,7 +70,7 @@ Use the `.render`-method of the H5P-Nodejs-Library, which generates a H5P Page t
 ```ts
 const h5pObject = require(`test/h5p.json`);
 const contentObject = require(`test/content/content.json`);
-H5P.render('test', contentObject, h5pObject).then(h5pPage =>
+h5p.render('test', contentObject, h5pObject).then(h5pPage =>
     send(h5pPage);
 );
 ```
