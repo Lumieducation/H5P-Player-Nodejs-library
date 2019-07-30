@@ -3,11 +3,13 @@
 [![Build Status](https://travis-ci.org/Lumieducation/H5P-Nodejs-library.svg?branch=next)](https://travis-ci.org/Lumieducation/H5P-Nodejs-library)
 
 The H5P-Nodejs-library is a port of the [H5P-PHP-library](https://github.com/h5p/h5p-php-library) for Nodejs.
-Please note that this project is in a very early and experimental stage. If you have questions or want to contribute, feel free to open issues or pull requests.
+Please note that this project is in an experimental stage. If you have questions or want to contribute, feel free to open issues or pull requests.
 
 This package provides a framework-agnostic function that returns a promise, which resolves to a string. The string is the equivalent to what the H5P-PHP-library would generate and can be integrated via iframe. You will also have to serve the H5P-Core-files.
 
-## How to use
+## Quickstart
+
+This will show you the very basics on how to use this library. For more detailed information and integration-options see the interface-section below.
 
 ### 1. Provide H5P-Core files and libraries
 
@@ -47,14 +49,7 @@ const libraryLoader = (
     return require(`/the_path_to_your_libraries/${machineName}-${majorVersion}.${minorVersion}/library.json`);
 };
 
-const urls = {
-    baseUrl: '/h5p', // your base URL - used in the integration object
-    libraryUrl: `/h5p/libraries`, // URL where your libraries can be found
-    stylesUrl: `/h5p/core/styles`, // URL where the core styles can be found
-    scriptUrl: `/h5p/core/js` // URL where the core scripts can be found
-};
-
-const h5p = new H5P(libraryLoader, urls);
+const h5p = new H5P(libraryLoader);
 ```
 
 or see the [express-example](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/examples/server.js#L37)
@@ -78,6 +73,70 @@ h5p.render('test', contentObject, h5pObject).then(h5pPage =>
 ### Adapters
 
 We will provide adapters for express and meteor in the future. If you would like to see another adapter, please make a issue.
+
+## Interface
+
+```ts
+interface H5P(
+    libraryLoader: (machineName: string, majorVersion: number, minorVersion: number) => LibraryJSON,
+    urls?: {
+        baseUrL: string;
+        libraryUrl: string;
+        stylesUrl: string;
+        scriptUrl: string;
+    },
+    integration?: object,
+    content?: object,
+    customScripts?: string
+})
+```
+
+### libraryLoader
+
+A [H5P-Library](https://h5p.org/library-definition) is a folder that contains a `library.json` and the corresponding js/css files. H5P-Libraries can usualy be found in the root folder of a .h5p-file.
+The library loader is a function that loads the `library.json` of a specific H5P-library. The easiest way would be a function that uses nodejs-require for loading the library.json within a H5P-Library.
+The library-loader takes three arguments:
+
+1. machineName: string - the folder name in which the library can be found
+2. majorVersion: number
+3. minorVersion: number
+
+For example:
+
+```ts
+const libraryLoader = (
+    machineName: string,
+    majorVersion: number,
+    minorVersion: number
+) => {
+    return require(`/the_path_to_your_libraries/${machineName}-${majorVersion}.${minorVersion}/library.json`);
+};
+```
+
+### URLs (optional)
+
+The URLs-object can be used to configure the location of your libraries, scripts and styles.
+
+```ts
+const urls = {
+    baseUrl: '/h5p', // your base URL - used in the integration object
+    libraryUrl: `/h5p/libraries`, // URL where your libraries can be found
+    stylesUrl: `/h5p/core/styles`, // URL where the core styles can be found
+    scriptUrl: `/h5p/core/js` // URL where the core scripts can be found
+};
+```
+
+### Integration (optional)
+
+An object that is used as the `H5PIntegration`-object. (See [https://h5p.org/creating-your-own-h5p-plugin](https://h5p.org/creating-your-own-h5p-plugin) for more information.) It is merged with a [default integration object](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/src/index.js#L51) via `Object.assign()`.
+
+### Content (optional)
+
+An object that is used as the `H5PIntegration.contents['cid-contentId']`-object (See [https://h5p.org/creating-your-own-h5p-plugin](https://h5p.org/creating-your-own-h5p-plugin) for more information.) It is merged with a [default integration object](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/src/index.js#L60) via `Object.assign()`.
+
+### customScripts (optional)
+
+customScripts can be inserted as a string and are injected behind the `H5PIntegration`-definition-script in the [template](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/src/renderers/default.js#L15). These scripts can be used to furhter load information.
 
 ## Development & Testing
 
