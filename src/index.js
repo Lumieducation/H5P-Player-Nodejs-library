@@ -2,10 +2,14 @@ const defaultRenderer = require('./renderers/default');
 const defaultTranslation = require('./translations/en.json');
 
 class H5P {
-    constructor(libraryLoader, urls) {
+    constructor(libraryLoader, urls, integration, content, customScripts = '') {
         this.libraryLoader = libraryLoader;
         this.renderer = defaultRenderer;
         this.translation = defaultTranslation;
+
+        this.integration = integration;
+        this.content = content;
+        this.customScripts = customScripts;
 
         this.urls = Object.assign(
             {
@@ -28,7 +32,8 @@ class H5P {
             contentId,
             styles: this._coreStyles(),
             scripts: this._coreScripts(),
-            integration: this._integration(contentId, contentObject, h5pObject)
+            integration: this._integration(contentId, contentObject, h5pObject),
+            customScripts: this.customScripts
         };
 
         this._loadAssets(h5pObject.preloadedDependencies || [], model);
@@ -43,29 +48,35 @@ class H5P {
 
     _integration(contentId, contentObject, h5pObject) {
         // see https://h5p.org/creating-your-own-h5p-plugin
-        return {
-            url: this.baseUrl,
-            postUserStatistics: false,
-            saveFreq: false,
-            l10n: {
-                H5P: this.translation
-            },
-            contents: {
-                [`cid-${contentId}`]: {
-                    library: this._mainLibraryString(h5pObject),
-                    jsonContent: JSON.stringify(contentObject),
-                    fullScreen: false,
-                    displayOptions: {
-                        frame: false,
-                        export: false,
-                        embed: false,
-                        copyright: false,
-                        icon: false,
-                        copy: false
-                    }
+        return Object.assign(
+            {
+                url: this.baseUrl,
+                postUserStatistics: false,
+                saveFreq: false,
+                l10n: {
+                    H5P: this.translation
+                },
+                contents: {
+                    [`cid-${contentId}`]: Object.assign(
+                        {
+                            library: this._mainLibraryString(h5pObject),
+                            jsonContent: JSON.stringify(contentObject),
+                            fullScreen: false,
+                            displayOptions: {
+                                frame: false,
+                                export: false,
+                                embed: false,
+                                copyright: false,
+                                icon: false,
+                                copy: false
+                            }
+                        },
+                        this.content
+                    )
                 }
-            }
-        };
+            },
+            this.integration
+        );
     }
 
     _coreStyles() {
