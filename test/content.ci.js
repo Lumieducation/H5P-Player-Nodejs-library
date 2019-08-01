@@ -41,9 +41,7 @@ server.listen(8080, () => {
                             browser.newPage().then(page => {
                                 page.on('pageerror', msg => {
                                     console.log(
-                                        `${example.library} (${
-                                            example.page
-                                        }): ERROR`,
+                                        `${example.library} (${example.page}): ERROR`,
                                         example,
                                         msg
                                     );
@@ -59,9 +57,7 @@ server.listen(8080, () => {
                                     setTimeout(() => {
                                         page.close();
                                         console.log(
-                                            `${example.library}(${
-                                                example.page
-                                            }): OK`
+                                            `${example.library}(${example.page}): OK`
                                         );
                                         resolve();
                                     }, 1000);
