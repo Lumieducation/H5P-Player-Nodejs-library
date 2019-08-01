@@ -52,6 +52,16 @@ const libraryLoader = (
 const h5p = new H5P(libraryLoader);
 ```
 
+You can also load the library asynchronously by returning a promise from libraryLoader. For example:
+
+```ts
+const libraryLoader = (
+    machineName: string,
+    majorVersion: number,
+    minorVersion: number
+) => request(`https://mysite.com/h5p/${machineName}-${majorVersion}.${minorVersion}/library.json`)); // request returns a promise
+```
+
 or see the [express-example](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/examples/server.js#L37)
 
 #### 2.2 Provide the H5P- and Content-Object and use the renderer
