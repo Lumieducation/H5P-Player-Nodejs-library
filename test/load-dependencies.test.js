@@ -109,6 +109,74 @@ describe('Loading dependencies', () => {
             });
     });
 
+    it('loads async dependencies in the correct order', () => {
+        const contentId = 'foo';
+        const contentObject = {};
+        const h5pObject = {
+            mainLibrary: 'Foo',
+            preloadedDependencies: [
+                {
+                    machineName: 'Foo',
+                    majorVersion: 4,
+                    minorVersion: 2
+                }
+            ]
+        };
+        const libraryLoader = (name, maj, min) =>
+            new Promise(resolve => {
+                setTimeout(
+                    () =>
+                        resolve(
+                            {
+                                Foo42: {
+                                    preloadedJs: [{ path: 'foo.js' }],
+                                    preloadedCss: [{ path: 'foo.css' }],
+                                    preloadedDependencies: [
+                                        {
+                                            machineName: 'Bar',
+                                            majorVersion: 2,
+                                            minorVersion: 1
+                                        }
+                                    ]
+                                },
+                                Bar21: {
+                                    preloadedJs: [{ path: 'bar.js' }],
+                                    preloadedCss: [{ path: 'bar.css' }],
+                                    preloadedDependencies: [
+                                        {
+                                            machineName: 'Baz',
+                                            majorVersion: 3,
+                                            minorVersion: 3
+                                        }
+                                    ]
+                                },
+                                Baz33: {
+                                    preloadedJs: [{ path: 'baz.js' }],
+                                    preloadedCss: [{ path: 'baz.css' }]
+                                }
+                            }[name + maj + min]
+                        ),
+                    100
+                );
+            });
+
+        return new H5P(libraryLoader)
+            .useRenderer(model => model)
+            .render(contentId, contentObject, h5pObject)
+            .then(model => {
+                expect(model.styles.slice(2)).toEqual([
+                    '/h5p/libraries/Baz-3.3/baz.css',
+                    '/h5p/libraries/Bar-2.1/bar.css',
+                    '/h5p/libraries/Foo-4.2/foo.css'
+                ]);
+                expect(model.scripts.slice(8)).toEqual([
+                    '/h5p/libraries/Baz-3.3/baz.js',
+                    '/h5p/libraries/Bar-2.1/bar.js',
+                    '/h5p/libraries/Foo-4.2/foo.js'
+                ]);
+            });
+    });
+
     it('resolves deep dependencies', () => {
         const contentId = 'foo';
         const contentObject = {};

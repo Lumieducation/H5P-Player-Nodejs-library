@@ -36,10 +36,18 @@ class H5P {
             customScripts: this.customScripts
         };
 
-        return this._loadAssets(
+        const libraries = {};
+        return this._loadLibraries(
             h5pObject.preloadedDependencies || [],
-            model
-        ).then(() => this.renderer(model));
+            libraries
+        ).then(() => {
+            this._loadAssets(
+                h5pObject.preloadedDependencies || [],
+                model,
+                libraries
+            );
+            return this.renderer(model);
+        });
     }
 
     useRenderer(renderer) {
@@ -99,35 +107,60 @@ class H5P {
         ].map(file => `${this.scriptUrl}/${file}`);
     }
 
-    _loadAssets(dependencies, assets, loaded = {}) {
-        return Promise.all(
-            dependencies.map(dependency => {
-                const name = dependency.machineName;
-                const majVer = dependency.majorVersion;
-                const minVer = dependency.minorVersion;
+    _loadLibraries(dependencies, loaded) {
+        return new Promise(resolve => {
+            Promise.all(
+                dependencies.map(
+                    dependency =>
+                        new Promise(rslv => {
+                            const name = dependency.machineName;
+                            const majVer = dependency.majorVersion;
+                            const minVer = dependency.minorVersion;
 
-                const key = `${name}-${majVer}.${minVer}`;
+                            const key = `${name}-${majVer}.${minVer}`;
 
-                if (key in loaded) return Promise.resolve();
-                loaded[key] = true;
+                            if (key in loaded) return rslv();
 
-                return this._loadLibrary(name, majVer, minVer).then(lib =>
-                    this._loadAssets(
-                        lib.preloadedDependencies || [],
-                        assets,
-                        loaded
-                    ).then(() => {
-                        const path = `${this.libraryUrl}/${key}`;
-                        (lib.preloadedCss || []).forEach(asset =>
-                            assets.styles.push(`${path}/${asset.path}`)
-                        );
-                        (lib.preloadedJs || []).forEach(script =>
-                            assets.scripts.push(`${path}/${script.path}`)
-                        );
-                    })
-                );
-            })
-        );
+                            this._loadLibrary(name, majVer, minVer).then(
+                                lib => {
+                                    loaded[key] = lib;
+                                    this._loadLibraries(
+                                        lib.preloadedDependencies || [],
+                                        loaded
+                                    ).then(() => rslv());
+                                }
+                            );
+                        })
+                )
+            ).then(() => resolve());
+        });
+    }
+
+    _loadAssets(dependencies, assets, libraries = {}, loaded = {}) {
+        dependencies.map(dependency => {
+            const name = dependency.machineName;
+            const majVer = dependency.majorVersion;
+            const minVer = dependency.minorVersion;
+
+            const key = `${name}-${majVer}.${minVer}`;
+            if (key in loaded) return;
+
+            loaded[key] = true;
+            const lib = libraries[key];
+            this._loadAssets(
+                lib.preloadedDependencies || [],
+                assets,
+                libraries,
+                loaded
+            );
+            const path = `${this.libraryUrl}/${key}`;
+            (lib.preloadedCss || []).forEach(asset =>
+                assets.styles.push(`${path}/${asset.path}`)
+            );
+            (lib.preloadedJs || []).forEach(script =>
+                assets.scripts.push(`${path}/${script.path}`)
+            );
+        });
     }
 
     _mainLibraryString(h5pObject) {
