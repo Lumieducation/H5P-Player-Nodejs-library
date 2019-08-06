@@ -1,5 +1,5 @@
 const request = require('request-promise');
-const { JSDOM } = require("jsdom");
+const { JSDOM } = require('jsdom');
 
 const examples = [];
 
@@ -7,7 +7,7 @@ JSDOM.fromURL('https://h5p.org/content-types-and-applications')
     .then(dom => {
         const promises = [];
 
-        const lis = dom.window.document.querySelectorAll("li.views-row");
+        const lis = dom.window.document.querySelectorAll('li.views-row');
         for (let i = 0; i < lis.length; i++) {
             const li = lis[i];
             const link = li.getElementsByTagName('a')[1];
@@ -19,17 +19,23 @@ JSDOM.fromURL('https://h5p.org/content-types-and-applications')
                 library: name,
                 name: 'Example',
                 page: page
-            }
-            examples.push(example);
+            };
 
-            promises.push(request(page)
-                .then(content => {
-                    const exportUrlMatch = content.match(new RegExp(/"exportUrl":("[^"]+")/));
-                    const exportUrl = JSON.parse(exportUrlMatch[1]);
-                    example.h5p = exportUrl;
-                }));
+            if (name !== 'Impressive Presentation (ALPHA)') {
+                examples.push(example);
+
+                promises.push(
+                    request(page).then(content => {
+                        const exportUrlMatch = content.match(
+                            new RegExp(/"exportUrl":("[^"]+")/)
+                        );
+                        const exportUrl = JSON.parse(exportUrlMatch[1]);
+                        example.h5p = exportUrl;
+                    })
+                );
+            }
         }
 
-        return Promise.all(promises)
+        return Promise.all(promises);
     })
-    .then(() => console.log(JSON.stringify(examples, null, 2)))
+    .then(() => console.log(JSON.stringify(examples, null, 2)));
