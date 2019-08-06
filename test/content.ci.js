@@ -3,7 +3,7 @@ const path = require('path');
 const PromiseQueue = require('promise-queue');
 const express = require('express');
 const examples = require('../examples/examples.json');
-const H5P = require('../src');
+const H5P = require('../build');
 
 const server = express();
 const queue = new PromiseQueue(3, Infinity);
