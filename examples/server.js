@@ -5,7 +5,7 @@ const exec = util.promisify(require('child_process').exec);
 const express = require('express');
 const server = express();
 
-const H5P = require('../src');
+const H5P = require('../build');
 const examples = require('./examples.json');
 
 server.use('/favicon.ico', express.static(`${__dirname}/favicon.ico`));
