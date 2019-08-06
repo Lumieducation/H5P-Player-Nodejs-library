@@ -1,5 +1,5 @@
 const defaultRenderer = require('./renderers/default');
-const defaultTranslation = require('./translations/en.json');
+const defaultTranslation = require('../assets/translations/en.json');
 
 class H5P {
     constructor(libraryLoader, urls, integration, content, customScripts = '') {

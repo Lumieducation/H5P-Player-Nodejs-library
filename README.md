@@ -150,6 +150,7 @@ Make sure you have [`git`](https://git-scm.com/), [`node`](https://nodejs.org/),
 $ git clone https://github.com/Lumieducation/h5p-nodejs-library
 $ cd h5p-nodejs-library
 $ npm install
+$ npm run build
 $ npm start
 ```
 
