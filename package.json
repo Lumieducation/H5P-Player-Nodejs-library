@@ -13,11 +13,12 @@
         "uninstall": "npm run clean && rm -rf node_modules && examples/uninstall.sh",
         "build": "npx babel src --presets babel-preset-env --out-dir build",
         "build:watch": "npx babel src --watch --presets babel-preset-env --out-dir build",
-        "ci": "npm run build && npm run lint && npm run format:check && npm run test && npm run test:content",
+        "ci": "npm run build && npm run lint && npm run format:check && npm run test && npm run test:content && npm run test:content:async",
         "lint": "eslint ./src ./test",
         "test": "jest",
         "test:watch": "jest --watch",
         "test:content": "node test/download_content.ci.js && node test/content.ci.js",
+        "test:content:async": "node test/content-with-async-libraryLoader.ci.js",
         "format:check": "prettier --check \"{src,test}/**/*.js\"",
         "format": "prettier --write \"{src,test}/**/*.js\""
     },
