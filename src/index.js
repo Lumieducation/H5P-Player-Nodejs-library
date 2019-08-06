@@ -27,7 +27,7 @@ class H5P {
         this.scriptUrl = this.urls.scriptUrl;
     }
 
-    render(contentId, contentObject, h5pObject) {
+    render(contentId, contentObject, h5pObject, callback) {
         const model = {
             contentId,
             styles: this._coreStyles(),
@@ -38,6 +38,9 @@ class H5P {
 
         this._loadAssets(h5pObject.preloadedDependencies || [], model);
 
+        if (callback && typeof callback === 'function') {
+            return callback(this.renderer(model));
+        }
         return Promise.resolve(this.renderer(model));
     }
 
