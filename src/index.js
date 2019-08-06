@@ -121,7 +121,7 @@ class H5P {
 
                             if (key in loaded) return rslv();
 
-                            this._loadLibrary(name, majVer, minVer).then(
+                            return this._loadLibrary(name, majVer, minVer).then(
                                 lib => {
                                     loaded[key] = lib;
                                     this._loadLibraries(
@@ -137,7 +137,7 @@ class H5P {
     }
 
     _loadAssets(dependencies, assets, libraries = {}, loaded = {}) {
-        dependencies.map(dependency => {
+        dependencies.forEach(dependency => {
             const name = dependency.machineName;
             const majVer = dependency.majorVersion;
             const minVer = dependency.minorVersion;
