@@ -46,6 +46,10 @@ class H5P {
                 model,
                 libraries
             );
+
+            if (callback && typeof callback === 'function') {
+                return callback(this.renderer(model));
+            }
             return this.renderer(model);
         });
     }
