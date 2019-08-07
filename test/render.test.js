@@ -6,12 +6,11 @@ describe('H5P.render()', () => {
         const contentObject = {};
         const h5pObject = {};
 
-        const h5p = new H5P()
+        new H5P()
             .useRenderer(model => model)
             .render(contentId, contentObject, h5pObject, model => {
                 expect(model).toBeDefined();
                 expect(model.contentId).toBe('foo');
             });
-        expect(h5p).toBeUndefined();
     });
 });

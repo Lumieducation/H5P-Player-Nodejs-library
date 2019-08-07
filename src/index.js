@@ -36,12 +36,22 @@ class H5P {
             customScripts: this.customScripts
         };
 
-        this._loadAssets(h5pObject.preloadedDependencies || [], model);
+        const libraries = {};
+        return this._loadLibraries(
+            h5pObject.preloadedDependencies || [],
+            libraries
+        ).then(() => {
+            this._loadAssets(
+                h5pObject.preloadedDependencies || [],
+                model,
+                libraries
+            );
 
-        if (callback && typeof callback === 'function') {
-            return callback(this.renderer(model));
-        }
-        return Promise.resolve(this.renderer(model));
+            if (callback && typeof callback === 'function') {
+                return callback(this.renderer(model));
+            }
+            return this.renderer(model);
+        });
     }
 
     useRenderer(renderer) {
@@ -101,25 +111,52 @@ class H5P {
         ].map(file => `${this.scriptUrl}/${file}`);
     }
 
-    _loadAssets(dependencies, assets, loaded = {}) {
+    _loadLibraries(dependencies, loaded) {
+        return new Promise(resolve => {
+            Promise.all(
+                dependencies.map(
+                    dependency =>
+                        new Promise(rslv => {
+                            const name = dependency.machineName;
+                            const majVer = dependency.majorVersion;
+                            const minVer = dependency.minorVersion;
+
+                            const key = `${name}-${majVer}.${minVer}`;
+
+                            if (key in loaded) return rslv();
+
+                            return this._loadLibrary(name, majVer, minVer).then(
+                                lib => {
+                                    loaded[key] = lib;
+                                    this._loadLibraries(
+                                        lib.preloadedDependencies || [],
+                                        loaded
+                                    ).then(() => rslv());
+                                }
+                            );
+                        })
+                )
+            ).then(() => resolve());
+        });
+    }
+
+    _loadAssets(dependencies, assets, libraries = {}, loaded = {}) {
         dependencies.forEach(dependency => {
             const name = dependency.machineName;
             const majVer = dependency.majorVersion;
             const minVer = dependency.minorVersion;
 
             const key = `${name}-${majVer}.${minVer}`;
-
             if (key in loaded) return;
+
             loaded[key] = true;
-
-            const lib = this.libraryLoader(
-                dependency.machineName,
-                dependency.majorVersion,
-                dependency.minorVersion
+            const lib = libraries[key];
+            this._loadAssets(
+                lib.preloadedDependencies || [],
+                assets,
+                libraries,
+                loaded
             );
-
-            this._loadAssets(lib.preloadedDependencies || [], assets, loaded);
-
             const path = `${this.libraryUrl}/${key}`;
             (lib.preloadedCss || []).forEach(asset =>
                 assets.styles.push(`${path}/${asset.path}`)
@@ -142,6 +179,12 @@ class H5P {
         const minVer = library.minorVersion;
 
         return `${name} ${majVer}.${minVer}`;
+    }
+
+    _loadLibrary(machineName, majorVersion, minorVersion) {
+        return Promise.resolve(
+            this.libraryLoader(machineName, majorVersion, minorVersion)
+        );
     }
 }
 
