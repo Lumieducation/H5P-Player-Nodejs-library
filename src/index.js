@@ -27,7 +27,7 @@ class H5P {
         this.scriptUrl = this.urls.scriptUrl;
     }
 
-    render(contentId, contentObject, h5pObject) {
+    render(contentId, contentObject, h5pObject, callback) {
         const model = {
             contentId,
             styles: this._coreStyles(),
