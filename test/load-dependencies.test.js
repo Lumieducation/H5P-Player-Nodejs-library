@@ -177,6 +177,45 @@ describe('Loading dependencies', () => {
             });
     });
 
+    it('avoid loading the same library twice', () => {
+        const contentId = 'foo';
+        const contentObject = {};
+        const h5pObject = {
+            mainLibrary: 'Foo',
+            preloadedDependencies: [{ machineName: 'Foo' }]
+        };
+        const loaded = [];
+
+        const libraryLoader = name => {
+            loaded.push(name);
+
+            return Promise.resolve(
+                {
+                    Foo: {
+                        preloadedDependencies: [
+                            { machineName: 'Bar' },
+                            { machineName: 'Baz' }
+                        ]
+                    },
+                    Bar: {
+                        preloadedDependencies: [{ machineName: 'Jaz' }]
+                    },
+                    Baz: {
+                        preloadedDependencies: [{ machineName: 'Jaz' }]
+                    },
+                    Jaz: {}
+                }[name]
+            );
+        };
+
+        return new H5P(libraryLoader)
+            .useRenderer(model => model)
+            .render(contentId, contentObject, h5pObject)
+            .then(() => {
+                expect(loaded).toEqual(['Foo', 'Bar', 'Baz', 'Jaz']);
+            });
+    });
+
     it('resolves deep dependencies', () => {
         const contentId = 'foo';
         const contentObject = {};
