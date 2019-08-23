@@ -1,4 +1,4 @@
-const H5P = require('../src');
+const H5P = require('..').Player;
 
 describe('Rendering the HTML page', () => {
     it('uses default renderer and integration values', () => {
@@ -68,6 +68,7 @@ describe('Rendering the HTML page', () => {
   "contents": {
     "cid-foo": {
       "jsonContent": "{\\"my\\":\\"content\\"}",
+      "contentUrl": "/h5p/content/foo/content",
       "fullScreen": false,
       "displayOptions": {
         "frame": false,
@@ -252,6 +253,7 @@ describe('Rendering the HTML page', () => {
   "contents": {
     "cid-foo": {
       "jsonContent": "{\\"my\\":\\"content\\"}",
+      "contentUrl": "/h5p/content/foo/content",
       "fullScreen": false,
       "displayOptions": {
         "frame": false,

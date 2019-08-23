@@ -1,4 +1,4 @@
-const H5P = require('../src');
+const H5P = require('..').Player;
 
 describe('H5P.render()', () => {
     it('should work with a callback', () => {

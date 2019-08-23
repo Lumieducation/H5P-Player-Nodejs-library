@@ -1,4 +1,4 @@
-const H5P = require('../src');
+const H5P = require('..').Player;
 
 describe('Loading dependencies', () => {
     it('resolves main dependencies', () => {
