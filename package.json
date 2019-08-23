@@ -1,5 +1,5 @@
 {
-    "name": "h5p-nodejs-library",
+    "name": "h5p-player",
     "version": "v0.4.0",
     "description": "The H5P-Nodejs-library is a port of the H5P-PHP-library for Nodejs.",
     "repository": {
