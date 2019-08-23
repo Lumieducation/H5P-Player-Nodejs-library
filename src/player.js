@@ -1,7 +1,7 @@
 const defaultRenderer = require('./renderers/default');
 const defaultTranslation = require('../assets/translations/en.json');
 
-class H5P {
+class H5PPlayer {
     constructor(libraryLoader, urls, integration, content, customScripts = '') {
         this.libraryLoader = libraryLoader;
         this.renderer = defaultRenderer;
@@ -74,6 +74,9 @@ class H5P {
                         {
                             library: this._mainLibraryString(h5pObject),
                             jsonContent: JSON.stringify(contentObject),
+                            contentUrl: `${
+                                this.baseUrl
+                            }/content/${contentId}/content`,
                             fullScreen: false,
                             displayOptions: {
                                 frame: false,
@@ -188,4 +191,4 @@ class H5P {
     }
 }
 
-module.exports = H5P;
+module.exports = H5PPlayer;
