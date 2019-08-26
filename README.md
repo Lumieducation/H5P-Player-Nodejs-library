@@ -1,83 +1,80 @@
-# H5P-Nodejs-library
+# H5P-Player
 
 [![Build Status](https://travis-ci.org/Lumieducation/H5P-Nodejs-library.svg?branch=master)](https://travis-ci.org/Lumieducation/H5P-Nodejs-library)
 
-The H5P-Nodejs-library is a port of the [H5P-PHP-library](https://github.com/h5p/h5p-php-library) for Nodejs.
+This project is a port of the [H5P-PHP-library](https://github.com/h5p/h5p-php-library) for Nodejs.
+
 Please note that this project is in an experimental stage. If you have questions or want to contribute, feel free to open issues or pull requests.
 
-This package provides a framework-agnostic function that returns a promise, which resolves to a string. The string is the equivalent to what the H5P-PHP-library would generate and can be integrated via iframe. You will also have to serve the H5P-Core-files.
+This project provides a framework-agnostic way of playing the contents of a H5P package by returning HTML code that can be embedded as an iframe or integrated into an HTML page by using a custom renderer.
 
-## Quickstart
+An example of how to integrate and use this library can be found in the [H5P-Demo](https://github.com/Lumieducation/H5P-Demo) project.
 
-This will show you the very basics on how to use this library. For more detailed information and integration-options see the interface-section below.
+## Quick start
+
+This will show you the very basics on how to use this library. For more detailed information and integration-options see the *interface* section below.
 
 ### 1. Provide H5P-Core files and libraries
 
-See the [example integration for express](./examples/server.js) how to integrate it with express.
+See the [example integration for express](https://github.com/Lumieducation/H5P-Demo/blob/master/express.js) how to integrate it with express.
 
-You have to provide the H5P-Core and library-files. To do so
+You have to provide the H5P core and library files. To do so
 
 1. download the [H5P](https://github.com/h5p/h5p-php-library/archive/1.22.0.zip) folder and place it in your project.
-2. Add a route thats serves the H5P-Folder content. (See the [express-example](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/examples/server.js#L12))
+2. Add a route thats serves the H5P-Folder content. (See the [express-example](https://github.com/Lumieducation/H5P-Demo/blob/master/express.js#L62))
 
-### 2. Use the H5P-Nodejs-library
+### 2. Use the H5P-Player
 
-#### 2.1 Require the H5P-Nodejs-Library
+Install the library with 
 
-```ts
-const H5P = require('h5p-nodejs-library');
+```
+npm install h5p-player
 ```
 
-#### 2.1 Provide a library loader.
+#### 2.1 Require the H5P-Player
 
-A [H5P-Library](https://h5p.org/library-definition) is a folder that contains a `library.json` and the corresponding js/css files. H5P-Libraries can usualy be found in the root folder of a .h5p-file.
-The library loader is a function that loads the `library.json` of a specific H5P-library. The easiest way would be a function that uses nodejs-require for loading the library.json within a H5P-Library.
-The library-loader takes three arguments:
+```js
+const H5PPlayer = require('h5p-player');
+```
 
-1. machineName: string - the folder name in which the library can be found
-2. majorVersion: number
-3. minorVersion: number
+#### 2.2 Provide a library loader.
 
 For example:
 
-```ts
+```js
 const libraryLoader = (
-    machineName: string,
-    majorVersion: number,
-    minorVersion: number
-) => {
-    return require(`/the_path_to_your_libraries/${machineName}-${majorVersion}.${minorVersion}/library.json`);
-};
+    machineName,
+    majorVersion,
+    minorVersion
+) => 
+    require(`./the_path_to_your_libraries/${machineName}-${majorVersion}.${minorVersion}/library.json`);
 
-const h5p = new H5P(libraryLoader);
+const player = new H5PPlayer.Player(libraryLoader);
 ```
 
-You can also load the library asynchronously by returning a promise from libraryLoader. For example:
+You can also load the library asynchronously by returning a promise. For example:
 
-```ts
+```js
 const libraryLoader = (
-    machineName: string,
-    majorVersion: number,
-    minorVersion: number
+    machineName,
+    majorVersion,
+    minorVersion
 ) => request(`https://mysite.com/h5p/${machineName}-${majorVersion}.${minorVersion}/library.json`)); // request returns a promise
 ```
 
-or see the [express-example](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/examples/server.js#L37)
+#### 2.3 Provide the H5P- and Content-Object and use the renderer
 
-#### 2.2 Provide the H5P- and Content-Object and use the renderer
+You have to provide a [H5P-Object](https://h5p.org/documentation/developers/json-file-definitions) and a Content-Object. 
 
-You have to provide a [H5P-Object](https://h5p.org/documentation/developers/json-file-definitions) and a Content-Object.
-The H5P-Object can be found in the root folder of a .h5p-file.
-The Content-Object can be found the the /content folder of a .h5p-file.
+The H5P-Object can be found in the root folder of a `.h5p` file. The Content-Object can be found the the `/content` folder of a `.h5p` file.
 
-Use the `.render`-method of the H5P-Nodejs-Library, which generates a H5P Page that can be embedded via iframe.
+Use the `.render`-method of the `Player`, which generates a H5P Page that can be embedded via iframe.
 
-```ts
-const h5pObject = require(`test/h5p.json`);
-const contentObject = require(`test/content/content.json`);
-h5p.render('test', contentObject, h5pObject).then(h5pPage =>
-    send(h5pPage);
-);
+```js
+const h5pObject = require(`./test/h5p.json`);
+const contentObject = require(`./test/content/content.json`);
+player.render('test', contentObject, h5pObject)
+    .then(h5pPage => send(h5pPage));
 ```
 
 ### Adapters
@@ -86,8 +83,8 @@ We will provide adapters for express and meteor in the future. If you would like
 
 ## Interface
 
-```ts
-interface H5P(
+```js
+interface H5PPlayer(
     libraryLoader: (machineName: string, majorVersion: number, minorVersion: number) => LibraryJSON,
     urls?: {
         baseUrL: string;
@@ -103,17 +100,19 @@ interface H5P(
 
 ### libraryLoader
 
-A [H5P-Library](https://h5p.org/library-definition) is a folder that contains a `library.json` and the corresponding js/css files. H5P-Libraries can usualy be found in the root folder of a .h5p-file.
-The library loader is a function that loads the `library.json` of a specific H5P-library. The easiest way would be a function that uses nodejs-require for loading the library.json within a H5P-Library.
-The library-loader takes three arguments:
+A [H5P Library](https://h5p.org/library-definition) is a folder that contains a `library.json` and the corresponding js/css files. Libraries can usually be found in the root folder of a `.h5p` file.
 
-1. machineName: string - the folder name in which the library can be found
-2. majorVersion: number
-3. minorVersion: number
+The library loader is a function that loads the `library.json` of a specific H5P-library. The easiest way would be a function that uses nodejs-require for loading the library.json within a H5P-Library.
+
+The library loader takes three arguments:
+
+1. `machineName: string` - the folder name in which the library can be found
+2. `majorVersion: number`
+3. `minorVersion: number`
 
 For example:
 
-```ts
+```js
 const libraryLoader = (
     machineName: string,
     majorVersion: number,
@@ -127,7 +126,7 @@ const libraryLoader = (
 
 The URLs-object can be used to configure the location of your libraries, scripts and styles.
 
-```ts
+```js
 const urls = {
     baseUrl: '/h5p', // your base URL - used in the integration object
     libraryUrl: `/h5p/libraries`, // URL where your libraries can be found
@@ -138,65 +137,46 @@ const urls = {
 
 ### Integration (optional)
 
-An object that is used as the `H5PIntegration`-object. (See [https://h5p.org/creating-your-own-h5p-plugin](https://h5p.org/creating-your-own-h5p-plugin) for more information.) It is merged with a [default integration object](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/src/index.js#L51) via `Object.assign()`.
+An object that is used as the `H5PIntegration` object. (See [the documentation on H5P.org](https://h5p.org/creating-your-own-h5p-plugin) for more information.) It is merged with a default integration object and is therefore optional.
 
 ### Content (optional)
 
-An object that is used as the `H5PIntegration.contents['cid-contentId']`-object (See [https://h5p.org/creating-your-own-h5p-plugin](https://h5p.org/creating-your-own-h5p-plugin) for more information.) It is merged with a [default integration object](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/src/index.js#L60) via `Object.assign()`.
+An object that is used as the `H5PIntegration.contents['cid-contentId']` object (See [the documentation on H5P.org](https://h5p.org/creating-your-own-h5p-plugin) for more information.) It is merged with a default content object and therefore optional.
 
 ### customScripts (optional)
 
-customScripts can be inserted as a string and are injected behind the `H5PIntegration`-definition-script in the [template](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/src/renderers/default.js#L15). These scripts can be used to furhter load information.
+customScripts can be inserted as a string and are injected behind the `H5PIntegration` definition script in the [template](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/src/renderers/default.js#L15). These scripts can be used to further load information.
 
 ## Development & Testing
 
 ### Prerequisites
 
-Make sure you have [`git`](https://git-scm.com/), [`node`](https://nodejs.org/), and [`npm`](https://www.npmjs.com/get-npm) installed.
+Make sure you have [`git`](https://git-scm.com/), [`node`](https://nodejs.org/) >= 10.16, and [`npm`](https://www.npmjs.com/get-npm) installed.
 
 ### Installing
 
-```
-$ git clone https://github.com/Lumieducation/h5p-nodejs-library
-$ cd h5p-nodejs-library
-$ npm install
-$ npm run build
-$ npm start
-```
+To install the project, execute the following commands
 
-### Usage
-
-Open `http://localhost:8080` in your browser. You will see a list of examples. By clicking on an example you download the corresponding .h5p-file and render it in the browser. See [express-example](https://github.com/Lumieducation/H5P-Nodejs-library/blob/next/examples/server.js) for the implementation.
+```
+git clone https://github.com/Lumieducation/h5p-nodejs-library
+cd h5p-nodejs-library
+npm install
+```
 
 ### Tests
 
-#### Unit Tests
-
-To run the unit tests with `jest` run
+After installation, your can run the tests with
 
 ```
-npm run test
+npm test
 ```
-
-#### Content Tests
-
-To run the integration test, simply use
-
-```
-npm run test:content
-```
-
-This command will do the following:
-
-1. download all H5P-Examples specified in the [examples/examples.json](examples/examples.json).
-2. start a local webserver on port 8080
-3. start a chromium instance via [puppeteer](https://github.com/GoogleChrome/puppeteer)
-4. checks every example if it throws errors when openend in a browser
 
 ## Contributing
 
 Lumi tries to improve education wherever it is possible by providing a software that connects teachers with their students. Every help is appreciated and welcome.
+
 Feel free to create pull requests.
+
 h5p-nodejs-library has adopted the code of conduct defined by the Contributor Covenant. It can be read in full [here](./CODE-OF-CONDUCT.md).
 
 ### Get in touch
