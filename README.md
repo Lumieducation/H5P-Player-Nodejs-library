@@ -1,6 +1,6 @@
 # H5P-Player
 
-[![Build Status](https://travis-ci.org/Lumieducation/H5P-Nodejs-library.svg?branch=master)](https://travis-ci.org/Lumieducation/H5P-Nodejs-library)
+[![Build Status](https://travis-ci.org/Lumieducation/H5P-Player-Nodejs-library.svg?branch=master)](https://travis-ci.org/Lumieducation/H5P-Player-Nodejs-library)
 
 This project is a port of the [H5P-PHP-library](https://github.com/h5p/h5p-php-library) for Nodejs.
 
