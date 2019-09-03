@@ -1,10 +1,10 @@
 {
     "name": "h5p-player",
-    "version": "v0.4.0",
-    "description": "The H5P-Nodejs-library is a port of the H5P-PHP-library for Nodejs.",
+    "version": "v0.4.1",
+    "description": "The H5P-Player-Nodejs-library is a port of the H5P-PHP-library for Nodejs.",
     "repository": {
         "type": "git",
-        "url": "https://github.com/Lumieducation/h5p-nodejs-library"
+        "url": "https://github.com/Lumieducation/H5P-Player-Nodejs-library"
     },
     "scripts": {
         "clean": "rm -rf build",
