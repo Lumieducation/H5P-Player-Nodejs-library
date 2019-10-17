@@ -1,5 +1,9 @@
 # H5P-Player
 
+---
+# This Repository is deprecated and everything was moved to [https://github.com/Lumieducation/H5P-Nodejs-library](https://github.com/Lumieducation/H5P-Nodejs-library).
+---
+
 [![Build Status](https://travis-ci.org/Lumieducation/H5P-Player-Nodejs-library.svg?branch=master)](https://travis-ci.org/Lumieducation/H5P-Player-Nodejs-library)
 
 This project is a port of the [H5P-PHP-library](https://github.com/h5p/h5p-php-library) for Nodejs.
